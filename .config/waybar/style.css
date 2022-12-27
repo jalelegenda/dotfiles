@@ -1,0 +1,67 @@
+* {
+    font-size: 14px;
+    font-family: monospace;
+}
+
+window > box {
+    margin: 15px 15px 0 15px;
+}
+
+/* Omit side margins for left-most and right-most widgets. */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #eee;
+}
+
+window#waybar.empty #window {
+    background-color: rgba(0,0,0,0.0);
+}
+
+#window {
+    margin: 0 10px;
+    padding: 0 10px;
+}
+
+#window {
+    border-radius: 5px;
+    background-color: #0f080c;
+}
+
+#window button {
+    padding: 10px 0;
+}
+
+#workspaces button {
+    background-color: #0f080a;
+    color: #eee;
+    margin: 0 2px;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#mpd {
+    padding: 0 10px;
+    background-color: #0f080c;
+    border-radius: 5px;
+}
+

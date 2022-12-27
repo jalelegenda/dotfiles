@@ -1,0 +1,37 @@
+{
+    "layer": "top",
+    "spacing": 2,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["pulseaudio", "network", "battery", "tray", "clock"],
+    "sway/window": {
+        "max-length": 50
+    },
+    "battery": {
+        "bat": "BAT0",
+        "format": "{capacity}% ({time}) <span color='#4fb07f'>{icon}</span>",
+        "format-icons": ["", "", "", "", ""],
+        "format-time": "{H}:{m}",
+        "format-charging": "<span color='#4fb07f'> </span> {capacity}% ({time})",
+		"format-plugged": "<span color='#4fb07f'>{icon}</span> <span color='#b04f80'></span> {capacity}%",
+        "format-discharging": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
+        "interval": 60
+    },
+    "clock": {
+        "format": "{:%H:%M}"
+    },
+    "network": {
+        "format-wifi": "<span color='#4fb07f'></span> {essid} ({signalStrength}%)",
+        "format-ethernet": "{ifname} ﯱ",
+        "format-disconnected": "dc <span color='#4fb07f'></span>"
+    },
+    "pulseaudio": {
+        "format": "<span color='#4fb07f'>蓼</span> {volume}% | <span color='#b04f80'></span> {format_source}",
+        "max-length": 15,
+        "format-source": "{volume}%"
+    },
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 50
+    }
+}
