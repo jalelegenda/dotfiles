@@ -4,7 +4,7 @@
 }
 
 window > box {
-    margin: 15px 15px 0 15px;
+    margin: 5px 5px 0 5px;
 }
 
 /* Omit side margins for left-most and right-most widgets. */

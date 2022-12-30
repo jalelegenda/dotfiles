@@ -1,0 +1,7 @@
+prompt=What do you want?
+height=260
+width=800
+key_expand=Tab
+dynamic_lines=true
+layer=overlay
+

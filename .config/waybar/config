@@ -28,7 +28,8 @@
     "pulseaudio": {
         "format": "<span color='#4fb07f'>蓼</span> {volume}% | <span color='#b04f80'></span> {format_source}",
         "max-length": 15,
-        "format-source": "{volume}%"
+        "format-source": "{volume}%",
+        "on-click": "pavucontrol"
     },
     "sway/window": {
         "format": "{title}",

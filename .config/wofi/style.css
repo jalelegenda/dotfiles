@@ -1,0 +1,35 @@
+* {
+  font-family: monospace;
+}
+
+#window {
+  background-color: transparent;
+  border: transparent;
+}
+
+#inner-box {
+  margin: 4px 4px 8px 4px;
+}
+
+#outer-box {
+  border: #b04f80 solid 4px;
+}
+
+#scroll {
+  margin-bottom: 4px;
+}
+
+#entry:selected {
+  background-color: #4fb07f;
+}
+
+#entry {
+  background-color: #e3e7f2;
+}
+
+#input {
+  background-color: #e3e7f2;
+  border-radius: 0px;
+  margin: 4px;
+  padding: 4px;
+}
