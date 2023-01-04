@@ -7,6 +7,8 @@ set $right l
 set $term alacritty
 set $menu exec wofi --show drun
 set $laptop eDP-1
+set $aoc HDMI-A-1
+set $browser firefox
 
 ### Output configuration
 output * {
@@ -14,7 +16,12 @@ output * {
 }
 output $laptop {
     scale 2
-    pos 2560 0 res 3840x2160
+    pos 2560 360 res 3840x2160
+}
+
+output $aoc {
+    scale 1
+    pos 0 0 res 2560x1440
 }
 
 ### Laptop configuration
@@ -55,6 +62,7 @@ font pango:Hack 12px
 # run
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
+bindsym $mod+m exec $browser
 
 # shell
 bindsym $mod+q kill
