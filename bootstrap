@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $(id -u) != "0" ]; then
+  echo "Please run script as root."
+  echo "Exiting..."
+  return
+fi
+
+xbps-install -Syu
+
+# TODO: Install packages
+# TODO: Modify runit power scripts permissions
+# TODO: Generate /usr/local/bin/sway-run.sh & /usr/local/bin/wayland_enablement.sh
+# TODO: Install oh-my-bash and append sourcing of ~/.config/bash/*
