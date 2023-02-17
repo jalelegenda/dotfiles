@@ -1,10 +1,10 @@
 * {
-    font-size: 14px;
-    font-family: monospace;
+    font-size: 15px;
+    font-family: "UbuntuMono", "monospace";
 }
 
 window > box {
-    margin: 5px 5px 0 5px;
+    margin: 0px 5px 0 5px;
 }
 
 /* Omit side margins for left-most and right-most widgets. */
@@ -27,24 +27,42 @@ window#waybar.empty #window {
 #window {
     margin: 0 10px;
     padding: 0 10px;
+    background-color: #4fb07f;
+    color: #0f080a;
 }
 
-#window {
-    border-radius: 5px;
-    background-color: #0f080c;
-}
-
-#window button {
-    padding: 10px 0;
+button:hover {
+    background: inherit;
+    box-shadow: none;
 }
 
 #workspaces button {
+    transition-duration: 200ms;
+    border-radius: 0;
     background-color: #0f080a;
     color: #eee;
-    margin: 0 2px;
+}
+
+#workspaces button:hover, 
+#workspaces button.focused:hover {
+    transition-duration: 200ms;
+    box-shadow: none;
+    border: solid 1px #60d090;
+    text-shadow: none;
+    background-color: #60d090;
+    color: #0f080a;
 }
 
 #clock,
+#workspaces button.focused {
+    background-color: #4fb07f;
+    color: #0f080a;
+}
+
+#clock {
+    padding: 0 10px;
+}
+
 #battery,
 #cpu,
 #memory,
@@ -61,7 +79,6 @@ window#waybar.empty #window {
 #scratchpad,
 #mpd {
     padding: 0 10px;
-    background-color: #0f080c;
-    border-radius: 5px;
+    background-color: #0f080a;
 }
 

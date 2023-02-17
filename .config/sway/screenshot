@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ ! -d ~/Pictures ]]; then
+  mkdir ~/Pictures
+fi
+
+if [[ ! -d ~/Pictures/screenshots ]]; then
+  mkdir ~/Pictures/screenshots
+fi
+
+grim -g "$(slurp)" ~/Pictures/screenshots/Screenshot_$(date +%d-%m-%YT%H-%M-%S).jpg
+

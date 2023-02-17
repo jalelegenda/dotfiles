@@ -1,7 +1,7 @@
-prompt=What do you want?
-height=260
+prompt=Run...
+height=200
 width=800
 key_expand=Tab
 dynamic_lines=true
-layer=overlay
+layer=top
 

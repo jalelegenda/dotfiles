@@ -7,19 +7,29 @@ set $right l
 set $term alacritty
 set $menu exec wofi --show drun
 set $laptop eDP-1
-set $aoc HDMI-A-1
+set $escreen HDMI-A-1
+set $fexplorer nnn
+set $coding code-oss
 set $browser firefox
+set $swaylock swaylock -f \
+    -i /home/jakov/Pictures/wallpaper/green_sunset.jpg \
+    --font=UbuntuMono \
+    --font-size=26 \
+    --indicator-radius=25 \
+    --inside-color=4fb07f \
+    --indicator-thickness=4 \
+    --layout-bg-color=00000000
 
 ### Output configuration
 output * {
-    bg /home/jakov/Pictures/wallpaper/16504.jpg fill
+    bg /home/jakov/Pictures/wallpaper/lake.jpg fill
 }
 output $laptop {
     scale 2
     pos 2560 360 res 3840x2160
 }
 
-output $aoc {
+output $escreen {
     scale 1
     pos 0 0 res 2560x1440
 }
@@ -30,9 +40,9 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -i /home/jakov/Pictures/wallpaper/Cliff-Background-for-PC.jpg' \
-         timeout 350 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -i /home/jakov/Pictures/wallpaper/Cliff-Background-for-PC.jpg'
+        timeout 300 '$swaylock' \
+        timeout 600 'sudo zzz' \
+        before-sleep '$swaylock'
 
 ### Input configuration
 input type:touchpad {
@@ -43,31 +53,46 @@ input type:touchpad {
 }
 input type:keyboard {
     xkb_layout hr,us
-    xkb_options grp:lalt_lshift_toggle
+    xkb_options grp:lalt_rshift_toggle
 }
 input type:touch {
     events disabled
 }
+
+### Appearance
 
 gaps inner 5
 gaps outer 0
 
 default_border pixel 3
 smart_borders on
-focus_follows_mouse yes
+focus_follows_mouse no
 
-font pango:Hack 12px
+font pango:Ubuntu 12px
+
+client.focused #4fb07f #4fb07f #0f080a #a0ff90
+client.unfocused #1f202f #1f202f #eeeeee #ffffff
 
 ### Key bindings
 # run
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
 bindsym $mod+m exec $browser
+bindsym $mod+Control+m exec pavucontrol
+bindsym Print exec ~/.config/sway/screenshot
+bindsym $mod+o exec $coding
+bindsym $mod+y exec $fexplorer
 
 # shell
 bindsym $mod+q kill
 bindsym $mod+c reload
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+r exec swaynag -t warning -m 'Are you sure you want to reboot?' -B 'Yes, reboot' 'sudo reboot'
+bindsym $mod+Shift+o exec swaynag -t warning -m 'Are you sure you want to shutdown?' -B 'Yes, shutdown' 'sudo poweroff'
+bindsym $mod+Shift+y exec $swaylock
+bindsym $mod+Shift+z exec $swaylock && sudo zzz
+bindsym button2 kill
+bindsym --border button2 kill
 
 floating_modifier $mod normal
 
@@ -110,6 +135,10 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+l move workspace to output right
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
 
 ### Layout
 bindsym $mod+b splith
@@ -170,8 +199,10 @@ bar {
 } 
 
 include /etc/sway/config.d/*
-exec gammastep -O 4000
+exec dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY
 exec pipewire
+exec gammastep -O 4000
+exec light -S 25
 exec alacritty
 exec nm-applet --indicator
 exec blueman-applet

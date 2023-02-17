@@ -1,5 +1,5 @@
 * {
-  font-family: monospace;
+  font-family: "UbuntuMono", monospace;
 }
 
 #window {
@@ -11,10 +11,6 @@
   margin: 4px 4px 8px 4px;
 }
 
-#outer-box {
-  border: #b04f80 solid 4px;
-}
-
 #scroll {
   margin-bottom: 4px;
 }
@@ -24,11 +20,11 @@
 }
 
 #entry {
-  background-color: #e3e7f2;
+  background-color: #e2ddd2;
 }
 
 #input {
-  background-color: #e3e7f2;
+  background-color: #e2ddd2;
   border-radius: 0px;
   margin: 4px;
   padding: 4px;

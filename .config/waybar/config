@@ -1,38 +1,49 @@
 {
     "layer": "top",
-    "spacing": 2,
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "battery", "tray", "clock"],
-    "sway/window": {
-        "max-length": 50
-    },
+    "modules-right": ["network", "backlight", "pulseaudio", "battery", "tray", "clock"],
     "battery": {
         "bat": "BAT0",
         "format": "{capacity}% ({time}) <span color='#4fb07f'>{icon}</span>",
-        "format-icons": ["", "", "", "", ""],
+        "format-icons": ["\udb82\udd42", "\udb80\udc7b", "\udb80\udc7d", "\udb80\udc7f", "\udb80\udc81", "\udb80\udc79"],
         "format-time": "{H}:{m}",
-        "format-charging": "<span color='#4fb07f'> </span> {capacity}% ({time})",
-		"format-plugged": "<span color='#4fb07f'>{icon}</span> <span color='#b04f80'></span> {capacity}%",
+        "format-charging": "<span font='18' color='#4fb07f'>\udb86\udc35</span> {capacity}% ({time})",
+		"format-plugged": "<span font='18' color='#4fb07f'>{icon}</span> <span rise='2000' color='#b04f80'></span> <span rise='2800'>{capacity}%</span>",
         "format-discharging": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
         "interval": 60
     },
+    "backlight": {
+        "format": "<span font='16' color='#4fb07f'>{icon}</span> <span rise='1800'>{percent}%</span>",
+        "format-icons": ["", "", "", ""],
+        "on-scroll-up": "light -A 2",
+        "on-scroll-down": "light -U 2"
+    },
     "clock": {
-        "format": "{:%H:%M}"
+        "format": "{:%H:%M}",
+        "format-alt": "{:%d-%b-%y}",
+        "interval": 1
     },
     "network": {
-        "format-wifi": "<span color='#4fb07f'></span> {essid} ({signalStrength}%)",
+        "format-wifi": "<span font='18' color='#4fb07f'></span> <span rise='3650'>{essid} ({signalStrength}%)</span>",
         "format-ethernet": "{ifname} ﯱ",
-        "format-disconnected": "dc <span color='#4fb07f'></span>"
+        "format-disconnected": "dc <span font='18' color='#4fb07f'>\udb80\udf19</span>",
+        "max-length": 18,
     },
     "pulseaudio": {
-        "format": "<span color='#4fb07f'>蓼</span> {volume}% | <span color='#b04f80'></span> {format_source}",
-        "max-length": 15,
-        "format-source": "{volume}%",
+        "format": "<span color='#4fb07f'>蓼</span> <span rise='500'>{volume}%</span>",
+        "max-length": 8,
         "on-click": "pavucontrol"
+    },
+    "wireplumber": {
+        "format": "{volume}%"
     },
     "sway/window": {
         "format": "{title}",
-        "max-length": 50
+        "max-length": 50,
+        "on-click-middle": "swaymsg kill",
+    },
+    "tray": {
+        "icon-size": 18
     }
 }
