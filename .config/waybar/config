@@ -2,41 +2,42 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "backlight", "pulseaudio", "battery", "tray", "clock"],
+    "modules-right": ["wireplumber", "network", "backlight", "pulseaudio", "battery", "tray", "clock"],
     "battery": {
         "bat": "BAT0",
         "format": "{capacity}% ({time}) <span color='#4fb07f'>{icon}</span>",
         "format-icons": ["\udb82\udd42", "\udb80\udc7b", "\udb80\udc7d", "\udb80\udc7f", "\udb80\udc81", "\udb80\udc79"],
         "format-time": "{H}:{m}",
-        "format-charging": "<span font='18' color='#4fb07f'>\udb86\udc35</span> {capacity}% ({time})",
-		"format-plugged": "<span font='18' color='#4fb07f'>{icon}</span> <span rise='2000' color='#b04f80'></span> <span rise='2800'>{capacity}%</span>",
+        "format-charging": "<span color='#4fb07f'>\udb86\udc35</span> {capacity}% ({time})",
+	"format-plugged": "<span color='#4fb07f'>{icon}</span> <span color='#b04f80'>\udb81\udea5</span> <span>{capacity}%</span>",
         "format-discharging": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
         "interval": 60
     },
     "backlight": {
-        "format": "<span font='16' color='#4fb07f'>{icon}</span> <span rise='1800'>{percent}%</span>",
-        "format-icons": ["", "", "", ""],
+        "format": "<span color='#4fb07f'>{icon}</span> <span>{percent}%</span>",
+        "format-icons": ["\udb80\udcde", "\udb80\udcdf", "\udb80\udcdd", "\udb80\udce0"],
         "on-scroll-up": "light -A 2",
         "on-scroll-down": "light -U 2"
     },
     "clock": {
         "format": "{:%H:%M}",
         "format-alt": "{:%d-%b-%y}",
-        "interval": 1
+        "interval": 1,
+    	"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "network": {
-        "format-wifi": "<span font='18' color='#4fb07f'></span> <span rise='3650'>{essid} ({signalStrength}%)</span>",
-        "format-ethernet": "{ifname} ﯱ",
-        "format-disconnected": "dc <span font='18' color='#4fb07f'>\udb80\udf19</span>",
-        "max-length": 18,
+        "format-wifi": "<span color='#4fb07f'>\uf1eb </span> <span>{essid} ({signalStrength}%)</span>",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "dc <span color='#4fb07f'>\udb80\udf19</span>",
+        "max-length": 20,
     },
     "pulseaudio": {
-        "format": "<span color='#4fb07f'>蓼</span> <span rise='500'>{volume}%</span>",
+        "format": "<span color='#4fb07f'>{icon}</span> <span>{volume}%</span>",
+	"format-icons": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"],
+        "format-muted": "<span color='#4fb07f'>\udb81\udf5f</span> <span>{volume}%</span>",
         "max-length": 8,
-        "on-click": "pavucontrol"
-    },
-    "wireplumber": {
-        "format": "{volume}%"
+        "on-click": "pavucontrol",
+    	"on-click-middle": "pamixer -t" 
     },
     "sway/window": {
         "format": "{title}",

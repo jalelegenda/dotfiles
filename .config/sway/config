@@ -6,19 +6,16 @@ set $up k
 set $right l
 set $term alacritty
 set $menu exec wofi --show drun
+
 set $laptop eDP-1
-set $escreen HDMI-A-1
+set $doma HDMI-A-1
+set $ured1 DP-3
+set $ured2 DP-4
+
 set $fexplorer nnn
 set $coding code-oss
 set $browser firefox
-set $swaylock swaylock -f \
-    -i /home/jakov/Pictures/wallpaper/green_sunset.jpg \
-    --font=UbuntuMono \
-    --font-size=26 \
-    --indicator-radius=25 \
-    --inside-color=4fb07f \
-    --indicator-thickness=4 \
-    --layout-bg-color=00000000
+set $swaylock swaylock
 
 ### Output configuration
 output * {
@@ -29,9 +26,19 @@ output $laptop {
     pos 2560 360 res 3840x2160
 }
 
-output $escreen {
+output $doma {
     scale 1
     pos 0 0 res 2560x1440
+}
+
+output $ured1 {
+    scale 1
+    pos 1920 0 res 1920x1080
+}
+
+output $ured2 {
+    scale 1
+    pos 0 0 res 1920x1080
 }
 
 ### Laptop configuration
@@ -66,7 +73,7 @@ gaps outer 0
 
 default_border pixel 3
 smart_borders on
-focus_follows_mouse no
+focus_follows_mouse yes
 
 font pango:Ubuntu 12px
 
@@ -206,4 +213,5 @@ exec light -S 25
 exec alacritty
 exec nm-applet --indicator
 exec blueman-applet
+exec dunst
 
