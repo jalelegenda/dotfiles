@@ -1,0 +1,16 @@
+#!/bin/bash
+# bash initialization script
+
+
+
+for f in $(find ~/.ssh -name id_rsa); do
+    ssh-add -q $f
+done
+
+interserver_mountpoint=/home/jakov/SSH/interserver;
+
+if ! df -h 2>&1 | grep -q "$interserver_mountpoint"; then
+    echo "Mounting ${interserver_mountpoint##/}"
+    sshfs -p 36404 jakov@162.250.127.156:/home/jakov "$interserver_mountpoint"
+fi
+

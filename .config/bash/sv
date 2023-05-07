@@ -1,5 +1,8 @@
+#!/bin/bash
+# runit utility commands
+
 function delete() {
-  if [[ -z $1 ]]; then
+  if [ -z $1 ]; then
     echo "Specify service..."
   else
     $(sudo rm -rf /var/service/$1)
@@ -7,14 +10,14 @@ function delete() {
 }
 
 function svlink() {
-  if [[ -z $1 ]]; then
+  if [ -z $1 ]; then
     echo "Specify service..."
     return
   fi
 
-  if [[ -f "/etc/sv/$1/run" && ! -L "/var/service/$1" ]]; then
+  if [ -f "/etc/sv/$1/run" && ! -L "/var/service/$1" ]; then
     $(sudo ln -s /etc/sv/$1 /var/service/)
-  elif [[ -f "/etc/sv/$1/run" ]]; then
+  elif [ -f "/etc/sv/$1/run" ]; then
     echo "Service already linked. Aborting..."
   else 
     echo "No such service. Aborting..."
@@ -22,15 +25,15 @@ function svlink() {
 }
 
 function disable() {
-  if [[ -z $1 ]]; then
+  if [ -z $1 ]; then
     echo "Specify service..."
     return
   fi
 
-  if [[ -d "/var/service/$1" && ! -f "/var/service/$1/down" ]]; then
+  if [ -d "/var/service/$1" && ! -f "/var/service/$1/down" ]; then
     $(sudo touch /var/service/$1/down)
     echo "$1 disabled."
-  elif [[ -d "/var/service/$1" && -f "/var/service/$1/down" ]]; then
+  elif [ -d "/var/service/$1" && -f "/var/service/$1/down" ]; then
     echo "Service already disabled."
   else
     echo "No such service."
@@ -38,17 +41,17 @@ function disable() {
 }
 
 function enable() {
-  if [[ -z $1 ]]; then
+  if [ -z $1 ]; then
     echo "Specify service..."
     return
   fi
 
-  if [[ ! -d "/var/service/$1" ]]; then
+  if [ ! -d "/var/service/$1" ]; then
     echo "No such service."
     return
   fi
 
-  if [[ -d "/var/service/$1" && -f "/var/service/$1/down" ]]; then
+  if [ -d "/var/service/$1" && -f "/var/service/$1/down" ]; then
     $(sudo rm -rf /var/service/$1/down 2>/dev/null)
     echo "$1 enabled."
     return
