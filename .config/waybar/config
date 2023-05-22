@@ -5,8 +5,8 @@
     "modules-right": ["wireplumber", "network", "backlight", "pulseaudio", "battery", "tray", "clock"],
     "battery": {
         "bat": "BAT0",
-        "format": "{capacity}% ({time}) <span color='#4fb07f'>{icon}</span>",
-        "format-icons": ["\udb82\udd42", "\udb80\udc7b", "\udb80\udc7d", "\udb80\udc7f", "\udb80\udc81", "\udb80\udc79"],
+        "format": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
+        "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc82", "\udb80\udc79"],
         "format-time": "{H}:{m}",
         "format-charging": "<span color='#4fb07f'>\udb86\udc35</span> {capacity}% ({time})",
 	"format-plugged": "<span color='#4fb07f'>{icon}</span> <span color='#b04f80'>\udb81\udea5</span> <span>{capacity}%</span>",

@@ -12,3 +12,4 @@ xbps-install -Syu
 # TODO: Modify runit power scripts permissions
 # TODO: Generate /usr/local/bin/sway-run.sh & /usr/local/bin/wayland_enablement.sh
 # TODO: Install oh-my-bash and append sourcing of ~/.config/bash/*
+# TODO: Configure runit services

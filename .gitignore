@@ -1,6 +1,4 @@
 # wildcards
-*/
-!.*/
 !.config/*
 
 # unix directories
