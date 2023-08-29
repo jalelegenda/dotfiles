@@ -11,6 +11,8 @@ set $laptop eDP-1
 set $doma HDMI-A-1
 set $ured1 DP-3
 set $ured2 DP-4
+set $ured3 DP-5
+set $ured4 DP-6
 
 set $fexplorer nnn
 set $coding code-oss
@@ -19,26 +21,36 @@ set $swaylock swaylock
 
 ### Output configuration
 output * {
-    bg /home/jakov/Pictures/wallpaper/lake.jpg fill
+    bg /home/jakov/Pictures/wallpaper/violet_snowy_woods.jpg fill
 }
 output $laptop {
     scale 2
-    pos 2560 360 res 3840x2160
+    pos 0 0 res 3840x2160
 }
 
 output $doma {
     scale 1
-    pos 0 0 res 2560x1440
+    pos -2560 -360 res 2560x1440
 }
 
 output $ured1 {
     scale 1
-    pos 1920 0 res 1920x1080
+    pos 960 -1080 res 1920x1080
+}
+
+output $ured3 {
+    scale 1
+    pos 960 -1080 res 1920x1080
 }
 
 output $ured2 {
     scale 1
-    pos 0 0 res 1920x1080
+    pos -960 -1080 res 1920x1080
+}
+
+output $ured4 {
+    scale 1
+    pos -960 -1080 res 1920x1080
 }
 
 ### Laptop configuration
@@ -120,6 +132,7 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+bindsym $mod+Tab focus prev
 
 ### Workspace
 bindsym $mod+1 workspace number 1

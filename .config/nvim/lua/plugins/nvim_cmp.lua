@@ -3,7 +3,7 @@ local cmp = require'cmp'
 cmp.setup({
    snippet = {
      expand = function(args)
-         require'snippy'.expand_snippet(args.body)
+         require'luasnip'.lsp_expand(args.body)
      end,
    },
    window = {
@@ -17,8 +17,10 @@ cmp.setup({
    }),
    sources = cmp.config.sources({
      { name = 'nvim_lsp' },
-     { name = 'snippy' },
-     { name = 'buffer' },
-   })
+     { name = 'luasnip' },
+     { name = 'nvim_lua' },
+     { name = 'nvim_lsp_signature_help' },
+     { name = 'path' },
+   }),
 })
 

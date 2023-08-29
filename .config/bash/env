@@ -8,7 +8,7 @@ export NVM_SYMLINK_CURRENT=true
 export PAGER='less -R'
 
 # NNN
-export NNN_PLUG='f:fzplug;i:imgview;p:preview-tui;d:dragdrop'
+export NNN_PLUG='f:fzplug;i:imgview;p:preview-tui;d:dragdrop;a:autojump'
 export NNN_USE_EDITOR=1
 export NNN_EDITOR=nvim_USE_EDITOR=1
 export NNN_EDITOR=nvim

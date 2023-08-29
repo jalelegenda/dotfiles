@@ -24,5 +24,7 @@ x-scheme-handler/discord-455712169795780630=discord-455712169795780630.desktop
 application/pdf=org.pwmt.zathura.desktop
 application/lrf=calibre-lrfviewer.desktop
 application/epub+zip=calibre-ebook-viewer.desktop
+application/x-mobipocket-ebook=calibre-ebook-viewer.desktop
+video/quicktime=mpv.desktop
 
 [Added Associations]

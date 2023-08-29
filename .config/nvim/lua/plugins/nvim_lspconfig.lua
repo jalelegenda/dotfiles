@@ -11,76 +11,65 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  print(bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('i', '<C-l>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<leader>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, bufopts)
+    vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
+    debounce_text_changes = 150,
 }
 
 local lsps = {
     ['pylsp'] = {
-	settings = {
-	    pyls = {
-		configurationSources = {"flake8"},
-		plugins = {
-		    jedi_completion = {enabled = true},
-		    jedi_hover = {enabled = true},
-		    jedi_references = {enabled = true},
-		    jedi_signature_help = {enabled = true},
-		    jedi_symbols = {enabled = true, all_scopes = true},
-		    pycodestyle = {enabled = false},
-		    flake8 = {
-		      enabled = true,
-		      ignore = {},
-		      maxLineLength = 160
-		    },
-		    mypy = {enabled = false},
-		    isort = {enabled = false},
-		    yapf = {enabled = false},
-		    pylint = {enabled = false},
-		    pydocstyle = {enabled = false},
-		    mccabe = {enabled = false},
-		    preload = {enabled = false},
-		    rope_completion = {enabled = false},
-		},
+	pylsp = {
+	    plugins = {
+	    configurationSources = {'pycodestyle'},
+		jedi_completion = { enabled = true },
+		jedi_hover = { enabled = true },
+		jedi_references = { enabled = true },
+		jedi_signature_help = { enabled = true },
+		jedi_symbols = { enabled = true },
+		jedi = { environment = '.venv', },
+		pycodestyle = { enabled = true },
+		flake8 = { enabled = false },
+		mypy = { enabled = true },
+		isort = { enabled = false },
+		yapf = { enabled = false },
+		pylint = { enabled = true },
+		mccabe = { enabled = false },
+		preload = { enabled = false },
+		rope_completion = { enabled = false },
 	    },
 	},
     },
     ['lua_ls'] = {
-	settings = {
-	    Lua = {
-		diagnostics = {
-		    globals = {'vim'}
-		},
+	Lua = {
+	    diagnostics = {
+		globals = {'vim'}
 	    },
 	},
     },
-    ['pyright'] = {
-	settings = {
-	    venv = '**/.venv',
-	},
+    ['eslint'] = {
+
     },
 }
 
@@ -88,7 +77,7 @@ for lsp, settings in pairs(lsps) do
     lspconfig[lsp].setup {
 	on_attach = on_attach,
 	flags = lsp_flags,
-	settings = settings['settings'],
+	settings = settings,
 	capabilities = capabilities,
     }
 end

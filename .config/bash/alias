@@ -11,4 +11,5 @@ alias psg='ps aux | grep -i'
 alias se='sudoedit'
 alias n='nnn -P p -a'
 alias brc='. ~/.bashrc'
+alias f='fzf'
 

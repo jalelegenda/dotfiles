@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["wireplumber", "network", "backlight", "pulseaudio", "battery", "tray", "clock"],
+    "modules-right": ["network", "backlight", "pulseaudio", "battery", "tray", "clock"],
     "battery": {
         "bat": "BAT0",
         "format": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",

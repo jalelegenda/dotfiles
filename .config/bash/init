@@ -1,7 +1,9 @@
 #!/bin/bash
 # bash initialization script
 
-
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval 'ssh-agent -s' > /dev/null
+fi
 
 for f in $(find ~/.ssh -name id_rsa); do
     ssh-add -q $f
