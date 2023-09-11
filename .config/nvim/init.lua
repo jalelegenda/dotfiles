@@ -65,7 +65,10 @@ require'lazy'.setup({
 	end,
     },
     {
-	'Vonr/align.nvim',
+	'echasnovski/mini.align'
+    },
+    {
+	'echasnovski/mini.indentscope'
     },
     {
 	'L3MON4D3/LuaSnip',
@@ -75,10 +78,16 @@ require'lazy'.setup({
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
     },
     {
-      "folke/tokyonight.nvim",
-      lazy = false,
-      priority = 1000,
-      opts = {},
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+    },
+    {
+        'romgrk/barbar.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        init = function() vim.g.barbar_auto_setup = false end,
+        version = '^1.0.0',
     },
     {
 	'folke/which-key.nvim',
@@ -88,12 +97,6 @@ require'lazy'.setup({
 	    vim.o.timeoutlen = 300
 	end,
 	opts = {},
-    },
-    {
-	'romgrk/barbar.nvim',
-        dependencies = {
-	    'nvim-tree/nvim-web-devicons',
-	},
     },
     {
 	'rafamadriz/friendly-snippets'
@@ -112,7 +115,10 @@ require'lazy'.setup({
 	    require'auto-save'.setup{}
 	end,
     },
-
+    {
+	'nvim-lualine/lualine.nvim',
+	dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
 })
 
 require'plugins.telescope'
@@ -123,5 +129,6 @@ require'plugins.nvim_cmp'
 require'plugins.nvim_lspconfig'
 require'plugins.align'
 require'plugins.barbar'
+require'plugins.lualine'
 require'persistence'.load()
 vim.cmd[[colorscheme tokyonight-moon]]
