@@ -228,4 +228,5 @@ exec alacritty
 exec nm-applet --indicator
 exec blueman-applet
 exec dunst
+exec caffeine
 

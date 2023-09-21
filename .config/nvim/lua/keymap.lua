@@ -13,6 +13,3 @@ vim.keymap.set('n', '<leader>X', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
 vim.keymap.set('n', '<leader>Xl', '<Cmd>BufferCloseBuffersRight<CR>', opts)
 vim.keymap.set('n', '<leader>Xh', '<Cmd>BufferCloseBuffersLeft<CR>', opts)
 
-
--- insert mode
-vim.keymap.set('i', '<C-Del>', '<Cmd>delete<Cmd>', opts)

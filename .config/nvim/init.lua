@@ -119,6 +119,13 @@ require'lazy'.setup({
 	'nvim-lualine/lualine.nvim',
 	dependencies = { 'nvim-tree/nvim-web-devicons' }
     },
+    {
+	'johmsalas/text-case.nvim',
+	event = 'VeryLazy',
+	config = function()
+	    require'textcase'.setup{}
+	end
+    },
 })
 
 require'plugins.telescope'

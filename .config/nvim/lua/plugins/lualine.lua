@@ -4,7 +4,7 @@ require'lualine'.setup{
 	   {
 	       'filename',
 	       file_status = true,
-	       path = 2,
+	       path = 4,
 	   },
        },
    },
