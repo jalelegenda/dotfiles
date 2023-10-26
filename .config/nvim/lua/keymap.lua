@@ -10,6 +10,5 @@ vim.keymap.set('n', 'H', '<Cmd>BufferPrevious<CR>', opts)
 vim.keymap.set('n', 'L', '<Cmd>BufferNext<CR>', opts)
 vim.keymap.set('n', '<leader>x', '<Cmd>BufferClose<CR>', opts)
 vim.keymap.set('n', '<leader>X', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
-vim.keymap.set('n', '<leader>Xl', '<Cmd>BufferCloseBuffersRight<CR>', opts)
-vim.keymap.set('n', '<leader>Xh', '<Cmd>BufferCloseBuffersLeft<CR>', opts)
-
+vim.keymap.set('n', '<leader>XL', '<Cmd>BufferCloseBuffersRight<CR>', opts)
+vim.keymap.set('n', '<leader>XH', '<Cmd>BufferCloseBuffersLeft<CR>', opts)

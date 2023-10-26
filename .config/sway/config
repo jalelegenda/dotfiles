@@ -162,6 +162,8 @@ bindsym $mod+Control+Left move workspace to output left
 bindsym $mod+Control+Right move workspace to output right
 
 ### Layout
+for_window [app_id=".*"] floating enable
+
 bindsym $mod+b splith
 bindsym $mod+v splitv
 bindsym $mod+s layout stacking
@@ -228,5 +230,4 @@ exec alacritty
 exec nm-applet --indicator
 exec blueman-applet
 exec dunst
-exec caffeine
 

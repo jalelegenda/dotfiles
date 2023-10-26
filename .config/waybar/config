@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "backlight", "pulseaudio", "battery", "tray", "clock"],
+    "modules-right": ["network", "backlight", "pulseaudio", "idle_inhibitor", "battery", "tray", "clock"],
     "battery": {
         "bat": "BAT0",
         "format": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
@@ -46,5 +46,14 @@
     },
     "tray": {
         "icon-size": 18
-    }
+    },
+    "idle_inhibitor": {
+	"format": "{icon}",
+	"format-icons": {
+	    "activated": "<span color='#4fb07f'>\uf441</span>",
+	    "deactivated": "<span color='#4fb07f'>\uf4c5</span>"
+	},
+	"max-length": 3,
+	"min-length": 3,
+    },
 }
