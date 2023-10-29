@@ -34,7 +34,7 @@ require("lazy").setup({
         },
         config = function(_, opts)
             require("mason").setup(opts)
-            vim.keymap.set("n", "<leader>,", "<Cmd>Mason<CR>", keymap_opts)
+            vim.keymap.set("n", "<leader>.", "<Cmd>Mason<CR>", keymap_opts)
         end,
     },
     {
@@ -78,7 +78,7 @@ require("lazy").setup({
             local cmp = require("cmp")
             opts.completion = cmp.config.window.bordered()
             opts.window = {
-                documentation = cmp.config.window.bordered()
+                documentation = cmp.config.window.bordered(),
             }
             opts.mapping = cmp.mapping.preset.insert({
                 ["<C-Space>"] = cmp.mapping.complete(),
@@ -328,6 +328,11 @@ require("lazy").setup({
     require("plugins.gitsigns"),
     require("plugins.lspconfig"),
     require("plugins.treesitter"),
+}, {
+    ui = {
+        border = "rounded",
+    },
 })
 
+map("n", "<leader>,", "<cmd>Lazy<cr>", keymap_opts)
 require("persistence").load()
