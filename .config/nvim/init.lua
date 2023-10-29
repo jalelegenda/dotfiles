@@ -241,9 +241,6 @@ require("lazy").setup({
         end,
     },
     {
-        "lewis6991/gitsigns.nvim",
-    },
-    {
         "folke/noice.nvim",
         event = "VeryLazy",
         opts = {
