@@ -1,11 +1,8 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-local keymap_opts = { noremap = true, silent = true }
-
-require("keymap")
 require("options")
-local lsp = require("plugins.lspconfig")
-local treesitter = require("plugins.treesitter")
+require("keymap")
+
+local keymap_opts = { noremap = true, silent = true }
+local map = vim.keymap.set
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -37,7 +34,7 @@ require("lazy").setup({
         },
         config = function(_, opts)
             require("mason").setup(opts)
-            vim.keymap.set("n", "<leader><leader>", "<Cmd>Mason<CR>", keymap_opts)
+            vim.keymap.set("n", "<leader>,", "<Cmd>Mason<CR>", keymap_opts)
         end,
     },
     {
@@ -70,9 +67,32 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-nvim-lsp-signature-help",
         },
+        opts = {
+            snippet = {
+                expand = function(args)
+                    require("luasnip").lsp_expand(args.body)
+                end,
+            },
+        },
+        config = function(_, opts)
+            local cmp = require("cmp")
+            opts.completion = cmp.config.window.bordered()
+            opts.documentation = cmp.config.window.bordered()
+            opts.mapping = cmp.mapping.preset.insert({
+                ["<C-Space>"] = cmp.mapping.complete(),
+                ["<C-e>"] = cmp.mapping.abort(),
+                ["<CR>"] = cmp.mapping.confirm({ select = true }),
+            })
+            opts.sources = cmp.config.sources({
+                { name = "nvim_lsp" },
+                { name = "luasnip" },
+                { name = "nvim_lua" },
+                { name = "nvim_lsp_signature_help" },
+                { name = "path" },
+            })
+            cmp.setup(opts)
+        end,
     },
-    lsp,
-    treesitter,
     {
         "kylechui/nvim-surround",
         event = "VeryLazy",
@@ -95,7 +115,24 @@ require("lazy").setup({
     {
         "echasnovski/mini.comment",
         config = true,
-        version = false,
+        version = "*",
+    },
+    {
+        "echasnovski/mini.animate",
+        config = true,
+        version = "*",
+        opts = {
+            cursor = {
+                timing = function(_, n)
+                    return 100 / n
+                end,
+            },
+            scroll = {
+                timing = function(_, n)
+                    return 100 / n
+                end,
+            },
+        },
     },
     {
         "L3MON4D3/LuaSnip",
@@ -103,6 +140,19 @@ require("lazy").setup({
     {
         "nvim-tree/nvim-tree.lua",
         dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            sort_by = "case_sensitive",
+            view = {
+                width = 30,
+            },
+            git = {
+                enable = false,
+            },
+        },
+        config = function(_, opts)
+            require("nvim-tree").setup(opts)
+            vim.keymap.set("n", "<leader>t", "<Cmd>NvimTreeToggle<CR>", { remap = true, silent = true })
+        end,
     },
     {
         "folke/tokyonight.nvim",
@@ -150,13 +200,38 @@ require("lazy").setup({
     },
     {
         "Pocco81/auto-save.nvim",
-        config = function()
-            require("auto-save").setup({})
-        end,
+        config = true,
     },
     {
         "nvim-lualine/lualine.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+            "folke/noice.nvim",
+        },
+        config = function()
+            local lualine = require("lualine")
+            local noice = require("noice")
+            local opts = {
+                sections = {
+                    lualine_c = {
+                        {
+                            "filename",
+                            file_status = true,
+                            path = 4,
+                        },
+                        {
+                            noice.api.statusline.mode.get,
+                            cond = noice.api.statusline.mode.has,
+                            color = { fg = "#ff9e64" },
+                        },
+                    },
+                },
+                options = {
+                    theme = "tokyonight",
+                },
+            }
+            lualine.setup(opts)
+        end,
     },
     {
         "johmsalas/text-case.nvim",
@@ -171,26 +246,89 @@ require("lazy").setup({
     {
         "folke/noice.nvim",
         event = "VeryLazy",
-        opts = {},
+        opts = {
+            lsp = {
+                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true,
+                },
+            },
+            presets = {
+                bottom_search = true, -- use a classic bottom cmdline for search
+                command_palette = true, -- position the cmdline and popupmenu together
+                long_message_to_split = true, -- long messages will be sent to a split
+                inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = false, -- add a border to hover docs and signature help
+            },
+        },
         dependencies = {
             "MunifTanjim/nui.nvim",
             "rcarriga/nvim-notify",
         },
     },
-    -- {
-    --     "RRethy/vim-illuminate",
-    -- },
+    {
+        "RRethy/vim-illuminate",
+        config = function()
+            require("illuminate").configure({
+                providers = {
+                    "lsp",
+                    "treesitter",
+                    "regex",
+                },
+                delay = 100,
+                filetype_overrides = {},
+                filetypes_denylist = {
+                    "dirbuf",
+                    "dirvish",
+                    "fugitive",
+                },
+                filetypes_allowlist = {},
+                modes_denylist = {},
+                modes_allowlist = {},
+                providers_regex_syntax_denylist = {},
+                providers_regex_syntax_allowlist = {},
+                under_cursor = true,
+                large_file_cutoff = 5000,
+                large_file_overrides = nil,
+                min_count_to_highlight = 1,
+                should_enable = function()
+                    return true
+                end,
+                case_insensitive_regex = false,
+            })
+        end,
+    },
+    {
+        "mfussenegger/nvim-lint",
+        config = function()
+            require("lint").linters_by_ft = {
+                python = { "pylint" },
+            }
+        end,
+    },
     {
         "stevearc/conform.nvim",
+        config = function()
+            local conform = require("conform")
+
+            conform.setup({
+                formatters_by_ft = {
+                    lua = { "stylua" },
+                    -- Conform will run multiple formatters sequentially
+                    python = { "isort", "black" },
+                    -- Use a sub-list to run only the first available formatter
+                    javascript = { { "prettierd", "prettier" } },
+                },
+            })
+
+            map({ "n", "v" }, "<leader>F", conform.format, keymap_opts)
+        end,
     },
+    require("plugins.gitsigns"),
+    require("plugins.lspconfig"),
+    require("plugins.treesitter"),
 })
 
-require("plugins.nvim_tree")
-require("plugins.nvim_cmp")
-require("plugins.noice")
-require("plugins.lualine")
-require("plugins.gitsigns")
--- require("plugins.illuminate")
-require("plugins.conform")
-require("plugins.nvim_lint")
 require("persistence").load()

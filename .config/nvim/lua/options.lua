@@ -11,5 +11,7 @@ vim.g.netrw_winsize = 20
 vim.g.netrw_banner = 0
 vim.g.netrw_localcopydircmd = 'cp -r'
 vim.g.netrw_altv = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 vim.lsp.set_log_level('debug')

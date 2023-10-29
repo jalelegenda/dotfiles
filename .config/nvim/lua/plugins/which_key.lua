@@ -1,2 +1,0 @@
-locak wk = require'wk'
-
