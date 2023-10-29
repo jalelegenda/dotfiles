@@ -77,7 +77,9 @@ require("lazy").setup({
         config = function(_, opts)
             local cmp = require("cmp")
             opts.completion = cmp.config.window.bordered()
-            opts.documentation = cmp.config.window.bordered()
+            opts.window = {
+                documentation = cmp.config.window.bordered()
+            }
             opts.mapping = cmp.mapping.preset.insert({
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
