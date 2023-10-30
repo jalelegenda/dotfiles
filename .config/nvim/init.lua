@@ -325,6 +325,12 @@ require("lazy").setup({
             map({ "n", "v" }, "<leader>F", conform.format, keymap_opts)
         end,
     },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+           require("ibl").setup()
+        end,
+    },
     require("plugins.gitsigns"),
     require("plugins.lspconfig"),
     require("plugins.treesitter"),
