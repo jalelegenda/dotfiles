@@ -219,7 +219,7 @@ require("lazy").setup({
                         {
                             "filename",
                             file_status = true,
-                            path = 4,
+                            path = 1,
                         },
                         {
                             noice.api.statusline.mode.get,
