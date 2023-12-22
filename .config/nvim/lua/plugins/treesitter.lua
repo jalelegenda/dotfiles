@@ -28,20 +28,20 @@ return {
                     enable = true,
                     lookahead = true,
                     goto_next_start = {
-                        ["mf"] = "@function.outer",
-                        ["mc"] = "@class.outer",
+                        ["mfs"] = "@function.outer",
+                        ["mcs"] = "@class.outer",
                     },
                     goto_next_end = {
-                        ["mef"] = "@function.outer",
-                        ["mec"] = "@class.outer",
+                        ["mfe"] = "@function.outer",
+                        ["mce"] = "@class.outer",
                     },
                     goto_previous_start = {
-                        ["Mf"] = "@function.outer",
-                        ["Mc"] = "@class.outer",
+                        ["MFS"] = "@function.outer",
+                        ["MCS"] = "@class.outer",
                     },
                     goto_previous_end = {
-                        ["mef"] = "@function.outer",
-                        ["mec"] = "@class.outer",
+                        ["MFE"] = "@function.outer",
+                        ["MCE"] = "@class.outer",
                     },
                 },
             },

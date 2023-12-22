@@ -1,3 +1,10 @@
+local map = vim.keymap.set
+
+local set_desc = function(t, desc)
+    t.desc = desc
+    return t
+end
+
 return {
     "neovim/nvim-lspconfig",
     config = function()
@@ -5,29 +12,30 @@ return {
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
         local opts = { noremap = true, silent = true }
 
-        vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-        vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-        vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+        map("n", "<leader>e", vim.diagnostic.open_float, set_desc(opts, "Open diagnostics in floating window"))
+        map("n", "[d", vim.diagnostic.goto_prev, set_desc(opts, "Go to previous diagnostic"))
+        map("n", "]d", vim.diagnostic.goto_next, set_desc(opts, "Go to next diagnostic"))
+        map("n", "<leader>q", vim.diagnostic.setloclist, set_desc(opts, "Open diagnostic list"))
 
         local on_attach = function(client, bufnr)
             vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
-            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-            vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, bufopts)
-            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-            vim.keymap.set("i", "<C-l>", vim.lsp.buf.signature_help, bufopts)
-            vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-            vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-            vim.keymap.set("n", "<leader>wl", function()
+            map("n", "glD", vim.lsp.buf.declaration, set_desc(opts, "Go to declaration"))
+            map("n", "gld", vim.lsp.buf.definition, set_desc(opts, "Go to definition"))
+            map("n", "glh", vim.lsp.buf.hover, set_desc(bufopts, "Hover info"))
+            map("n", "gli", vim.lsp.buf.implementation, set_desc(bufopts, "Navigate to implementation"))
+            map("i", "<C-l>", vim.lsp.buf.signature_help, bufopts)
+            map("n", "glwa", vim.lsp.buf.add_workspace_folder, set_desc(bufopts, "Add workspace folder"))
+            map("n", "glwr", vim.lsp.buf.remove_workspace_folder, set_desc(bufopts, "Remove workspace folder"))
+            map("n", "glwl", function()
                 print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, bufopts)
-            vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
-            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-            vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, bufopts)
+            end, set_desc(bufopts, "List workspace folders"))
+            map("n", "gltd", vim.lsp.buf.type_definition, bufopts)
+            map("n", "glr", vim.lsp.buf.rename, set_desc(bufopts, "Rename symbol"))
+            map("n", "glc", vim.lsp.buf.code_action, set_desc(bufopts, "Code actions"))
+            map("n", "gla", require("telescope.builtin").lsp_references, set_desc(bufopts, "List all references"))
         end
 
         local lsp_flags = {
@@ -41,15 +49,16 @@ return {
                     plugins = {
                         configurationSources = { "pycodestyle" },
                         jedi_completion = { enabled = true },
-                        jedi_hover = { enabled = true },
+                        jedi_hover = { enabled = false },
                         jedi_references = { enabled = true },
                         jedi_signature_help = { enabled = true },
                         jedi_symbols = { enabled = true },
                         jedi = { environment = ".venv" },
-                        pycodestyle = { enabled = true },
+                        pycodestyle = { enabled = false },
                         flake8 = { enabled = false },
-                        mypy = { enabled = true },
-                        isort = { enabled = true },
+                        pyflakes = {enabled = false },
+                        mypy = { enabled = false },
+                        isort = { enabled = false },
                         yapf = { enabled = false },
                         pylint = { enabled = false },
                         mccabe = { enabled = false },
@@ -84,5 +93,5 @@ return {
                 capabilities = capabilities,
             })
         end
-    end
+    end,
 }

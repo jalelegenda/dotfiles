@@ -1,6 +1,11 @@
 require("options")
 require("keymap")
 
+local set_desc = function(t, desc)
+    t.desc = desc
+    return t
+end
+
 local keymap_opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 
@@ -48,13 +53,13 @@ require("lazy").setup({
         config = function()
             local builtin = require("telescope.builtin")
 
-            vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-            vim.keymap.set("n", "<leader>fw", builtin.live_grep, {})
-            vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-            vim.keymap.set("n", "<leader>fs", builtin.grep_string, {})
-            vim.keymap.set("n", "<leader>sb", builtin.lsp_document_symbols, {})
-            vim.keymap.set("n", "<leader>sw", builtin.lsp_workspace_symbols, {})
-            vim.keymap.set("n", "<leader>rw", builtin.registers, {})
+            vim.keymap.set("n", "<leader>ff", builtin.find_files, set_desc(keymap_opts, 'Search for files'))
+            vim.keymap.set("n", "<leader>fw", builtin.live_grep, set_desc(keymap_opts, 'Search in files'))
+            vim.keymap.set("n", "<leader>fb", builtin.buffers, set_desc(keymap_opts, 'List buffers'))
+            vim.keymap.set("n", "<leader>fs", builtin.grep_string, set_desc(keymap_opts, 'Search for string under cursor'))
+            vim.keymap.set("n", "<leader>fm", builtin.lsp_document_symbols, set_desc(keymap_opts, 'List document symbols'))
+            vim.keymap.set("n", "<leader>fc", builtin.lsp_workspace_symbols, set_desc(keymap_opts, 'List workspace symbols'))
+            vim.keymap.set("n", "<leader>fR", builtin.registers, set_desc(keymap_opts, 'List registers'))
         end,
     },
     {
@@ -66,6 +71,9 @@ require("lazy").setup({
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-nvim-lsp-signature-help",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+            "rafamadriz/friendly-snippets",
         },
         opts = {
             snippet = {
@@ -76,9 +84,11 @@ require("lazy").setup({
         },
         config = function(_, opts)
             local cmp = require("cmp")
-            opts.completion = cmp.config.window.bordered()
             opts.window = {
                 documentation = cmp.config.window.bordered(),
+                completion = cmp.config.window.bordered({
+                    winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+                }),
             }
             opts.mapping = cmp.mapping.preset.insert({
                 ["<C-Space>"] = cmp.mapping.complete(),
@@ -119,23 +129,23 @@ require("lazy").setup({
         config = true,
         version = "*",
     },
-    {
-        "echasnovski/mini.animate",
-        config = true,
-        version = "*",
-        opts = {
-            cursor = {
-                timing = function(_, n)
-                    return 100 / n
-                end,
-            },
-            scroll = {
-                timing = function(_, n)
-                    return 100 / n
-                end,
-            },
-        },
-    },
+    -- {
+    --     "echasnovski/mini.animate",
+    --     config = true,
+    --     version = "*",
+    --     opts = {
+    --         cursor = {
+    --             timing = function(_, n)
+    --                 return 100 / n
+    --             end,
+    --         },
+    --         scroll = {
+    --             timing = function(_, n)
+    --                 return 50 / n
+    --             end,
+    --         },
+    --     },
+    -- },
     {
         "L3MON4D3/LuaSnip",
     },
@@ -305,6 +315,11 @@ require("lazy").setup({
             require("lint").linters_by_ft = {
                 python = { "pylint" },
             }
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+              callback = function()
+                require("lint").try_lint()
+              end,
+            })
         end,
     },
     {
@@ -328,7 +343,7 @@ require("lazy").setup({
     {
         "lukas-reineke/indent-blankline.nvim",
         config = function()
-           require("ibl").setup()
+            require("ibl").setup()
         end,
     },
     require("plugins.gitsigns"),
@@ -336,9 +351,11 @@ require("lazy").setup({
     require("plugins.treesitter"),
 }, {
     ui = {
-        border = "rounded",
+        border = "cornered",
     },
 })
 
 map("n", "<leader>,", "<cmd>Lazy<cr>", keymap_opts)
-require("persistence").load()
+if pcall(require, "persistence") then
+    require("persistence").load()
+end

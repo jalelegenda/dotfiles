@@ -4,7 +4,7 @@ vim.o.smarttab = true
 vim.o.shiftwidth = 4
 vim.o.clipboard = 'unnamedplus'
 vim.o.termguicolors = true
-vim.o.scrolloff = 20
+vim.o.scrolloff = 5
 
 vim.g.netrw_keepdir = 0
 vim.g.netrw_winsize = 20

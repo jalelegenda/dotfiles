@@ -9,7 +9,6 @@ alias nvims='conf_nvim'
 alias dockerstop='docker stop $(docker ps -q)'
 alias psg='ps aux | grep -i'
 alias se='sudoedit'
-alias n='nnn -P p -a'
 alias brc='. ~/.bashrc'
 alias f='fzf'
 
