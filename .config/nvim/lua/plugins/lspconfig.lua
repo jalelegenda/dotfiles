@@ -44,7 +44,7 @@ return {
         }
 
         local lsps = {
-            ["pylsp"] = {
+            pylsp = {
                 pylsp = {
                     plugins = {
                         configurationSources = { "pycodestyle" },
@@ -67,22 +67,23 @@ return {
                     },
                 },
             },
-            ["lua_ls"] = {
+            lua_ls = {
                 Lua = {
                     diagnostics = {
                         globals = { "vim" },
                     },
                 },
             },
-            ["eslint"] = {},
-            ["tsserver"] = {},
+            eslint = {},
+            tsserver = {},
             --    ['terraformls'] = {},
-            ["docker_compose_language_service"] = {},
-            ["dockerls"] = {},
-            ["graphql"] = {},
-            ["cssls"] = {},
-            ["html"] = {},
-            ["tailwindcss"] = {},
+            docker_compose_language_service = {},
+            dockerls = {},
+            graphql = {},
+            cssls = {},
+            html = {},
+            tailwindcss = {},
+            bashls = {},
         }
 
         for lsp, settings in pairs(lsps) do
@@ -93,5 +94,14 @@ return {
                 capabilities = capabilities,
             })
         end
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = 'sh',
+          callback = function()
+            vim.lsp.start({
+              name = 'bash-language-server',
+              cmd = { 'bash-language-server', 'start' },
+            })
+          end,
+        })
     end,
 }

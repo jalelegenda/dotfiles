@@ -34,7 +34,7 @@ require("lazy").setup({
         },
         opts = {
             ui = {
-                border = "rounded",
+                border = "single",
             },
         },
         config = function(_, opts)
@@ -53,13 +53,28 @@ require("lazy").setup({
         config = function()
             local builtin = require("telescope.builtin")
 
-            vim.keymap.set("n", "<leader>ff", builtin.find_files, set_desc(keymap_opts, 'Search for files'))
-            vim.keymap.set("n", "<leader>fw", builtin.live_grep, set_desc(keymap_opts, 'Search in files'))
-            vim.keymap.set("n", "<leader>fb", builtin.buffers, set_desc(keymap_opts, 'List buffers'))
-            vim.keymap.set("n", "<leader>fs", builtin.grep_string, set_desc(keymap_opts, 'Search for string under cursor'))
-            vim.keymap.set("n", "<leader>fm", builtin.lsp_document_symbols, set_desc(keymap_opts, 'List document symbols'))
-            vim.keymap.set("n", "<leader>fc", builtin.lsp_workspace_symbols, set_desc(keymap_opts, 'List workspace symbols'))
-            vim.keymap.set("n", "<leader>fR", builtin.registers, set_desc(keymap_opts, 'List registers'))
+            vim.keymap.set("n", "<leader>ff", builtin.find_files, set_desc(keymap_opts, "Search for files"))
+            vim.keymap.set("n", "<leader>fw", builtin.live_grep, set_desc(keymap_opts, "Search in files"))
+            vim.keymap.set("n", "<leader>fb", builtin.buffers, set_desc(keymap_opts, "List buffers"))
+            vim.keymap.set(
+                "n",
+                "<leader>fs",
+                builtin.grep_string,
+                set_desc(keymap_opts, "Search for string under cursor")
+            )
+            vim.keymap.set(
+                "n",
+                "<leader>fm",
+                builtin.lsp_document_symbols,
+                set_desc(keymap_opts, "List document symbols")
+            )
+            vim.keymap.set(
+                "n",
+                "<leader>fc",
+                builtin.lsp_workspace_symbols,
+                set_desc(keymap_opts, "List workspace symbols")
+            )
+            vim.keymap.set("n", "<leader>fR", builtin.registers, set_desc(keymap_opts, "List registers"))
         end,
     },
     {
@@ -85,7 +100,7 @@ require("lazy").setup({
         config = function(_, opts)
             local cmp = require("cmp")
             opts.window = {
-                documentation = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered({ border = "single" }),
                 completion = cmp.config.window.bordered({
                     winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
                 }),
@@ -93,7 +108,9 @@ require("lazy").setup({
             opts.mapping = cmp.mapping.preset.insert({
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
-                ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+                ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                ["<C-f>"] = cmp.mapping.scroll_docs(4),
             })
             opts.sources = cmp.config.sources({
                 { name = "nvim_lsp" },
@@ -316,9 +333,9 @@ require("lazy").setup({
                 python = { "pylint" },
             }
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-              callback = function()
-                require("lint").try_lint()
-              end,
+                callback = function()
+                    require("lint").try_lint()
+                end,
             })
         end,
     },
@@ -351,7 +368,7 @@ require("lazy").setup({
     require("plugins.treesitter"),
 }, {
     ui = {
-        border = "cornered",
+        border = "single",
     },
 })
 
