@@ -1,0 +1,5 @@
+alias dockerstop="docker stop $(docker ps -q) 2>/dev/null"
+alias n="nnn -P preview_tui"
+alias k="kubectl"
+alias v="nvim"
+alias brc=". ~/.bashrc"
