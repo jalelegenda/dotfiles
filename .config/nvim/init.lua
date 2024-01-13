@@ -373,6 +373,4 @@ require("lazy").setup({
 })
 
 map("n", "<leader>,", "<cmd>Lazy<cr>", keymap_opts)
-if pcall(require, "persistence") then
-    require("persistence").load()
-end
+map("n", "<leader>ls", [[<cmd>lua require("persistence").load()<cr>]], set_desc(keymap_opts, "Load directory session"))

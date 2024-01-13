@@ -24,7 +24,7 @@ output * {
     bg /home/jakov/Pictures/wallpaper/violet_snowy_woods.jpg fill
 }
 output $laptop {
-    scale 2
+    scale 1
     pos 0 0 res 3840x2160
 }
 
@@ -72,7 +72,7 @@ input type:touchpad {
 }
 input type:keyboard {
     xkb_layout hr,us
-    xkb_options grp:lalt_rshift_toggle
+    xkb_options grp:lalt_lshift_toggle
 }
 input type:touch {
     events disabled
@@ -216,6 +216,7 @@ bindsym XF86MonBrightnessDown exec light -U 2%
 bindsym XF86MonBrightnessUp exec light -A 2%
 bindsym XF86AudioRaiseVolume exec pamixer -i 5
 bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioPlay exec playerctl play-pause
 
 bar {
     swaybar_command waybar
