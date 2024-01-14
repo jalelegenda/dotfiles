@@ -1,0 +1,21 @@
+font=Ubuntu Mono Nerd Font
+edge=top
+layer=overlay
+
+border-bottom-size=1
+message-padding=6
+details-border-size=1
+button-border-size=1
+button-gap=8
+button-dismiss-gap=8
+button-margin-right=8
+button-padding=4
+
+[warning]
+button-background=#b04f80
+details-background=#b04f80 
+background=#b04f80
+text=#0f080a
+button-text=2E3440
+border=#0f080a
+border-bottom=#0f080a
