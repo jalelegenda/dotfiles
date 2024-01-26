@@ -326,19 +326,19 @@ require("lazy").setup({
             })
         end,
     },
-    {
-        "mfussenegger/nvim-lint",
-        config = function()
-            require("lint").linters_by_ft = {
-                python = { "pylint" },
-            }
-            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-                callback = function()
-                    require("lint").try_lint()
-                end,
-            })
-        end,
-    },
+    -- {
+    --     "mfussenegger/nvim-lint",
+    --     config = function()
+    --         require("lint").linters_by_ft = {
+    --             python = { "pylint" },
+    --         }
+    --         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    --             callback = function()
+    --                 require("lint").try_lint()
+    --             end,
+    --         })
+    --     end,
+    -- },
     {
         "stevearc/conform.nvim",
         config = function()
@@ -362,6 +362,18 @@ require("lazy").setup({
         config = function()
             require("ibl").setup()
         end,
+    },
+    {
+      "jackMort/ChatGPT.nvim",
+        event = "VeryLazy",
+        config = function()
+          require("chatgpt").setup()
+        end,
+        dependencies = {
+          "MunifTanjim/nui.nvim",
+          "nvim-lua/plenary.nvim",
+          "nvim-telescope/telescope.nvim"
+        }
     },
     require("plugins.gitsigns"),
     require("plugins.lspconfig"),

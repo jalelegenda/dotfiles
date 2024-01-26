@@ -44,28 +44,8 @@ return {
         }
 
         local lsps = {
-            pylsp = {
-                pylsp = {
-                    plugins = {
-                        configurationSources = { "pycodestyle" },
-                        jedi_completion = { enabled = true },
-                        jedi_hover = { enabled = false },
-                        jedi_references = { enabled = true },
-                        jedi_signature_help = { enabled = true },
-                        jedi_symbols = { enabled = true },
-                        jedi = { environment = ".venv" },
-                        pycodestyle = { enabled = false },
-                        flake8 = { enabled = false },
-                        pyflakes = {enabled = false },
-                        mypy = { enabled = false },
-                        isort = { enabled = false },
-                        yapf = { enabled = false },
-                        pylint = { enabled = false },
-                        mccabe = { enabled = false },
-                        preload = { enabled = false },
-                        rope_completion = { enabled = true },
-                    },
-                },
+            pyright = {
+                pythonPath = vim.fn.executable(".venv/bin/python")
             },
             lua_ls = {
                 Lua = {
@@ -84,6 +64,14 @@ return {
             html = {},
             tailwindcss = {},
             bashls = {},
+            yamlls = {
+                yaml = {
+                    schemaStore = {
+                        enable = true,
+                    },
+                },
+            },
+            clangd = {},
         }
 
         for lsp, settings in pairs(lsps) do
@@ -94,14 +82,14 @@ return {
                 capabilities = capabilities,
             })
         end
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = 'sh',
-          callback = function()
-            vim.lsp.start({
-              name = 'bash-language-server',
-              cmd = { 'bash-language-server', 'start' },
-            })
-          end,
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "sh",
+            callback = function()
+                vim.lsp.start({
+                    name = "bash-language-server",
+                    cmd = { "bash-language-server", "start" },
+                })
+            end,
         })
     end,
 }
