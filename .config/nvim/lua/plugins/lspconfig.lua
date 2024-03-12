@@ -36,6 +36,8 @@ return {
             map("n", "glr", vim.lsp.buf.rename, set_desc(bufopts, "Rename symbol"))
             map("n", "glc", vim.lsp.buf.code_action, set_desc(bufopts, "Code actions"))
             map("n", "gla", require("telescope.builtin").lsp_references, set_desc(bufopts, "List all references"))
+            map("i", "<C-n>", vim.lsp.diagnostic.goto_next, set_desc(bufopts, "Go to next diagnostic"))
+            map("i", "<C-p>", vim.lsp.diagnostic.goto_prev, set_desc(bufopts, "Go to previous diagnostic"))
         end
 
         local lsp_flags = {

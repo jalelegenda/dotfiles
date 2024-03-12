@@ -39,7 +39,7 @@ require("lazy").setup({
         },
         config = function(_, opts)
             require("mason").setup(opts)
-            vim.keymap.set("n", "<leader>.", "<Cmd>Mason<CR>", keymap_opts)
+            map("n", "<leader>.", "<Cmd>Mason<CR>", keymap_opts)
         end,
     },
     {
@@ -53,28 +53,13 @@ require("lazy").setup({
         config = function()
             local builtin = require("telescope.builtin")
 
-            vim.keymap.set("n", "<leader>ff", builtin.find_files, set_desc(keymap_opts, "Search for files"))
-            vim.keymap.set("n", "<leader>fw", builtin.live_grep, set_desc(keymap_opts, "Search in files"))
-            vim.keymap.set("n", "<leader>fb", builtin.buffers, set_desc(keymap_opts, "List buffers"))
-            vim.keymap.set(
-                "n",
-                "<leader>fs",
-                builtin.grep_string,
-                set_desc(keymap_opts, "Search for string under cursor")
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>fm",
-                builtin.lsp_document_symbols,
-                set_desc(keymap_opts, "List document symbols")
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>fc",
-                builtin.lsp_workspace_symbols,
-                set_desc(keymap_opts, "List workspace symbols")
-            )
-            vim.keymap.set("n", "<leader>fR", builtin.registers, set_desc(keymap_opts, "List registers"))
+            map("n", "<leader>ff", builtin.find_files, set_desc(keymap_opts, "Search for files"))
+            map("n", "<leader>fw", builtin.live_grep, set_desc(keymap_opts, "Search in files"))
+            map("n", "<leader>fb", builtin.buffers, set_desc(keymap_opts, "List buffers"))
+            map("n", "<leader>fs", builtin.grep_string, set_desc(keymap_opts, "Search for string under cursor"))
+            map("n", "<leader>fm", builtin.lsp_document_symbols, set_desc(keymap_opts, "List document symbols"))
+            map("n", "<leader>fc", builtin.lsp_dynamic_workspace_symbols, set_desc(keymap_opts, "List workspace symbols"))
+            map("n", "<leader>fR", builtin.registers, set_desc(keymap_opts, "List registers"))
         end,
     },
     {
@@ -180,7 +165,7 @@ require("lazy").setup({
         },
         config = function(_, opts)
             require("nvim-tree").setup(opts)
-            vim.keymap.set("n", "<leader>t", "<Cmd>NvimTreeToggle<CR>", { remap = true, silent = true })
+            map("n", "<leader>t", "<Cmd>NvimTreeToggle<CR>", { remap = true, silent = true })
         end,
     },
     {
@@ -364,17 +349,26 @@ require("lazy").setup({
         end,
     },
     {
-      "jackMort/ChatGPT.nvim",
-        event = "VeryLazy",
-        config = function()
-          require("chatgpt").setup()
-        end,
-        dependencies = {
-          "MunifTanjim/nui.nvim",
-          "nvim-lua/plenary.nvim",
-          "nvim-telescope/telescope.nvim"
-        }
+        "github/copilot.vim",
     },
+    -- {
+    --     "kndndrj/nvim-dbee",
+    --     dependencies = {
+    --         "MunifTanjim/nui.nvim",
+    --     },
+    --     build = function()
+    --         -- Install tries to automatically detect the install method.
+    --         -- if it fails, try calling it with one of these parameters:
+    --         --    "curl", "wget", "bitsadmin", "go"
+    --         require("dbee").install()
+    --     end,
+    --     config = function()
+    --         local dbee = require("dbee")
+    --         dbee.setup(
+    --             map("n", "<leader>-", dbee.open(), set_desc(keymap_opts, "Open Dbee UI"))
+    --         )
+    --     end,
+    -- },
     require("plugins.gitsigns"),
     require("plugins.lspconfig"),
     require("plugins.treesitter"),
