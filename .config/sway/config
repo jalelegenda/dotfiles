@@ -7,50 +7,20 @@ set $right l
 set $term alacritty
 set $menu exec wofi --show drun
 
-set $laptop eDP-1
-set $doma HDMI-A-1
-set $ured1 DP-3
-set $ured2 DP-4
-set $ured3 DP-5
-set $ured4 DP-6
-
-set $fexplorer nnn
+set $fexplorer Thunar
 set $coding code-oss
 set $browser firefox
 set $swaylock swaylock
 
+set $theme_main #cf636c 
+set $theme_accent #ef636c
+set $theme_contrast #cf636c 
+set $theme_contrast_accent #cf636c 
+set $theme_background #2a2c2f 
+
 ### Output configuration
 output * {
-    bg /home/jakov/Pictures/wallpaper/violet_snowy_woods.jpg fill
-}
-output $laptop {
-    scale 1
-    pos 0 0 res 3840x2160
-}
-
-output $doma {
-    scale 1
-    pos -2560 -360 res 2560x1440
-}
-
-output $ured1 {
-    scale 1
-    pos 960 -1080 res 1920x1080
-}
-
-output $ured3 {
-    scale 1
-    pos 960 -1080 res 1920x1080
-}
-
-output $ured2 {
-    scale 1
-    pos -960 -1080 res 1920x1080
-}
-
-output $ured4 {
-    scale 1
-    pos -960 -1080 res 1920x1080
+    bg /home/jakov/Pictures/wallpaper/rock_beach_brittany.jpeg fill
 }
 
 ### Laptop configuration
@@ -59,8 +29,9 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 ### Idle configuration
 exec swayidle -w \
+	timeout 10 'if pgrep -x swaylock; then sudo zzz; fi' \
         timeout 300 '$swaylock' \
-        timeout 600 'sudo zzz' \
+        timeout 420 'sudo zzz' \
         before-sleep '$swaylock'
 
 ### Input configuration
@@ -71,25 +42,28 @@ input type:touchpad {
     middle_emulation enabled
 }
 input type:keyboard {
-    xkb_layout hr,us
+    xkb_layout us,hr
     xkb_options grp:lalt_lshift_toggle
 }
 input type:touch {
     events disabled
 }
 
+# primary_selection disabled
+
 ### Appearance
 
 gaps inner 5
-gaps outer 0
+gaps outer 10
 
-default_border pixel 3
-smart_borders on
+default_border pixel 2
 focus_follows_mouse yes
+
+smart_borders disabled
 
 font pango:Ubuntu 12px
 
-client.focused #4fb07f #4fb07f #0f080a #a0ff90
+client.focused $theme_accent $theme_main $theme_contrast $theme_contrast
 client.unfocused #1f202f #1f202f #eeeeee #ffffff
 
 ### Key bindings
@@ -100,12 +74,12 @@ bindsym $mod+m exec $browser
 bindsym $mod+Control+m exec pavucontrol
 bindsym Print exec ~/.config/sway/screenshot
 bindsym $mod+o exec $coding
-bindsym $mod+y exec $fexplorer
+bindsym $mod+x exec $fexplorer
 
 # shell
 bindsym $mod+q kill
 bindsym $mod+c reload
-bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'pkill pipewire && swaymsg exit'
 bindsym $mod+Shift+r exec swaynag -t warning -m 'Are you sure you want to reboot?' -B 'Yes, reboot' 'sudo reboot'
 bindsym $mod+Shift+o exec swaynag -t warning -m 'Are you sure you want to shutdown?' -B 'Yes, shutdown' 'sudo poweroff'
 bindsym $mod+Shift+y exec $swaylock
@@ -162,7 +136,12 @@ bindsym $mod+Control+Left move workspace to output left
 bindsym $mod+Control+Right move workspace to output right
 
 ### Layout
-for_window [app_id=".*"] floating disable
+for_window [app_id=".*"] floating enable
+for_window [app_id="Firefox"] floating disable
+for_window [app_id="chromium"] floating disable
+for_window [app_id="^libreoffice.*$"] floating disable
+for_window [app_id="org.pwmt.zathura"] floating disable
+
 
 bindsym $mod+b splith
 bindsym $mod+v splitv
@@ -171,7 +150,8 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
-# focus
+
+### Focus
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 #
@@ -194,16 +174,16 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    bindsym $left resize shrink width 100px
+    bindsym $down resize grow height 100px
+    bindsym $up resize shrink height 100px
+    bindsym $right resize grow width 100px
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    bindsym Left resize shrink width 100px
+    bindsym Down resize grow height 100px
+    bindsym Up resize shrink height 100px
+    bindsym Right resize grow width 100px
 
     # Return to default mode
     bindsym Return mode "default"
@@ -217,6 +197,7 @@ bindsym XF86MonBrightnessUp exec light -A 2%
 bindsym XF86AudioRaiseVolume exec pamixer -i 5
 bindsym XF86AudioLowerVolume exec pamixer -d 5
 bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioMute exec pamixer -t
 
 bar {
     swaybar_command waybar
@@ -231,4 +212,5 @@ exec alacritty
 exec nm-applet --indicator
 exec blueman-applet
 exec dunst
+exec_always pkill kanshi; exec kanshi
 

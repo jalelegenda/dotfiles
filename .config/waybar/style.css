@@ -1,66 +1,70 @@
 * {
-    font-size: 15px;
-    font-family: "UbuntuMono", "monospace";
+  font-size: 15px;
+  font-family: "UbuntuMono", "monospace";
 }
 
 window > box {
-    margin: 0px 5px 0 5px;
+  margin: 15px 15px 0px 15px;
 }
 
 /* Omit side margins for left-most and right-most widgets. */
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
-}
-.modules-right > widget:last-child > #workspaces {
-    margin-right: 0;
+.modules-left, .modules-right {
+  border: 2px solid #cf636c;
 }
 
 window#waybar {
-    background: transparent;
-    color: #eee;
+  background: transparent;
+  color: #f4ebec;
 }
 
 window#waybar.empty #window {
-    background-color: rgba(0,0,0,0.0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 #window {
-    margin: 0 10px;
-    padding: 0 10px;
-    background-color: #4fb07f;
-    color: #0f080a;
+  margin: 0 10px;
+  padding: 0 10px;
+  background-color: #cf636c;
+  color: #2a2c2f;
+  border-radius: 22px;
 }
 
 button:hover {
-    background: inherit;
-    box-shadow: none;
+  background: inherit;
+  box-shadow: none;
 }
 
 #workspaces button {
-    transition-duration: 200ms;
-    border-radius: 0;
-    background-color: #0f080a;
-    color: #eee;
+  box-shadow: none;
+  transition: all 200ms ease;
+  border-radius: 0;
+  background-color: #2a2c2f;
+  color: #f4ebec;
 }
 
-#workspaces button:hover, 
+#workspaces button {
+  /* background-color: inherit; */
+  box-shadow: none;
+}
+
+#workspaces button:hover,
 #workspaces button.focused:hover {
-    transition-duration: 200ms;
-    box-shadow: none;
-    border: solid 1px #60d090;
-    text-shadow: none;
-    background-color: #60d090;
-    color: #0f080a;
+  transition: all 200ms ease;
+  box-shadow: none;
+  border: solid 1px #ef636c;
+  text-shadow: none;
+  background-color: #ef636c;
+  color: #2a2c2f;
 }
 
 #clock,
 #workspaces button.focused {
-    background-color: #4fb07f;
-    color: #0f080a;
+  background-color: #cf636c;
+  color: #2a2c2f;
 }
 
 #clock {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 
 #battery,
@@ -77,8 +81,16 @@ button:hover {
 #mode,
 #idle_inhibitor,
 #scratchpad,
+#language,
 #mpd {
-    padding: 0 10px;
-    background-color: #0f080a;
+  padding: 0 10px;
+  background-color: #2a2c2f;
 }
 
+.modules-right {
+  background-color: #2a2c2f;
+}
+
+.modules-left {
+  background-color: #2a2c2f;
+}

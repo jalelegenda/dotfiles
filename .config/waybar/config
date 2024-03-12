@@ -2,39 +2,73 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "backlight", "pulseaudio", "idle_inhibitor", "battery", "tray", "clock"],
+    "modules-right": ["network", "backlight", "pulseaudio", "battery", "cpu", "idle_inhibitor", "sway/language", "tray", "clock"],
+    "sway/workspaces": {
+	"all-outputs": true,
+    },
     "battery": {
         "bat": "BAT0",
-        "format": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
+        "format": "<span color='#cf636c'>{icon}</span> {capacity}%",
         "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc82", "\udb80\udc79"],
-        "format-time": "{H}:{m}",
-        "format-charging": "<span color='#4fb07f'>\udb86\udc35</span> {capacity}% ({time})",
-	"format-plugged": "<span color='#4fb07f'>{icon}</span> <span color='#b04f80'>\udb81\udea5</span> <span>{capacity}%</span>",
-        "format-discharging": "<span color='#4fb07f'>{icon}</span> {capacity}% ({time})",
-        "interval": 60
+        "format-charging": "<span color='#cf636c'>\udb86\udc35</span> {capacity}%",
+	"format-plugged": "<span color='#cf636c'>{icon}</span> <span color='#00616c'>\udb81\udea5</span> <span>{capacity}%</span>",
+        "format-discharging": "<span color='#cf636c'>{icon}</span> {capacity}%",
+        "interval": 10
     },
     "backlight": {
-        "format": "<span color='#4fb07f'>{icon}</span> <span>{percent}%</span>",
+        "format": "<span color='#cf636c'>{icon}</span> <span>{percent}%</span>",
         "format-icons": ["\udb80\udcde", "\udb80\udcdf", "\udb80\udcdd", "\udb80\udce0"],
         "on-scroll-up": "light -A 2",
         "on-scroll-down": "light -U 2"
     },
     "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%d-%b-%y}",
-        "interval": 1,
-    	"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+	"format": "{:%H:%M}  ",
+	"format-alt": "{:%A, %B %d, %Y (%R)} 󰃰",
+	"tooltip-format": "<tt><small>{calendar}</small></tt>",
+	"calendar": {
+	    "mode"          : "year",
+	    "mode-mon-col"  : 3,
+	    "weeks-pos"     : "right",
+	    "on-scroll"     : 1,
+	    "on-click-right": "mode",
+	    "format": {
+		"months":     "<span color='#ec9f99'><b>{}</b></span>",
+		"days":       "<span color='#f4ebec'><b>{}</b></span>",
+		"weeks":      "<span color='#697780'><b>W{}</b></span>",
+		"weekdays":   "<span color='#f4ebec'><b>{}</b></span>",
+		"today":      "<span color='#fc7b51'><b><i>{}</i></b></span>"
+	    }
+	},
+	"actions":  {
+	    "on-click-right": "mode",
+	    "on-click-forward": "tz_up",
+	    "on-click-backward": "tz_down",
+	    "on-scroll-up": "shift_up",
+	    "on-scroll-down": "shift_down"
+	}
     },
     "network": {
-        "format-wifi": "<span color='#4fb07f'>\uf1eb </span> <span>{essid} ({signalStrength}%)</span>",
+        "format-wifi": "<span color='#cf636c'>\uf1eb </span> <span>{essid} ({signalStrength}%)</span>",
         "format-ethernet": "{ifname} ",
-        "format-disconnected": "dc <span color='#4fb07f'>\udb80\udf19</span>",
+        "format-disconnected": "dc <span color='#cf636c'>\udb80\udf19</span>",
         "max-length": 20,
     },
+    "cpu": {
+	"interval": 1,
+	"format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+	"format-icons": [
+		"<span color='#00616c'>▁</span>",
+		"<span color='#1e6c76'>▂</span>",
+		"<span color='#697780'>▃</span>",
+		"<span color='#d49492'>▄</span>",
+		"<span color='#ff9d76'>▅</span>",
+		"<span color='#fc7b51'>▆</span>",
+	]
+    },
     "pulseaudio": {
-        "format": "<span color='#4fb07f'>{icon}</span> <span>{volume}%</span>",
+        "format": "<span color='#cf636c'>{icon}</span> <span>{volume}%</span>",
 	"format-icons": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"],
-        "format-muted": "<span color='#4fb07f'>\udb81\udf5f</span> <span>{volume}%</span>",
+        "format-muted": "<span color='#cf636c'>\udb81\udf5f</span> <span>{volume}%</span>",
         "max-length": 8,
         "on-click": "pavucontrol",
     	"on-click-middle": "pamixer -t" 
@@ -47,13 +81,14 @@
     "tray": {
         "icon-size": 18
     },
+    "sway/language": {
+	"format": "<span color='#CF636C'>\uf0ac</span> {short}",
+    },
     "idle_inhibitor": {
 	"format": "{icon}",
 	"format-icons": {
-	    "activated": "<span color='#4fb07f'>\uf441</span>",
-	    "deactivated": "<span color='#4fb07f'>\uf4c5</span>"
-	},
-	"max-length": 3,
-	"min-length": 3,
-    },
+	    "activated": "<span color='#CF636C'>󰛐</span>",
+	    "deactivated":  "<span color='#CF636C'>󰛑</span>"
+	}
+    }
 }

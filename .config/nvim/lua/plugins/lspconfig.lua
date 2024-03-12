@@ -1,8 +1,8 @@
 local map = vim.keymap.set
 
-local set_desc = function(t, desc)
-    t.desc = desc
-    return t
+local set_desc = function(opts, desc)
+    opts.desc = desc
+    return opts
 end
 
 return {
@@ -10,6 +10,7 @@ return {
     config = function()
         local lspconfig = require("lspconfig")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        capabilities.offsetEncoding = "utf-8"
         local opts = { noremap = true, silent = true }
 
         map("n", "<leader>e", vim.diagnostic.open_float, set_desc(opts, "Open diagnostics in floating window"))
@@ -18,7 +19,7 @@ return {
         map("n", "<leader>q", vim.diagnostic.setloclist, set_desc(opts, "Open diagnostic list"))
 
         local on_attach = function(client, bufnr)
-            vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+            -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -44,9 +45,7 @@ return {
         }
 
         local lsps = {
-            pyright = {
-                pythonPath = vim.fn.executable(".venv/bin/python")
-            },
+            pyright = {},
             lua_ls = {
                 Lua = {
                     diagnostics = {
@@ -55,8 +54,7 @@ return {
                 },
             },
             eslint = {},
-            tsserver = {},
-            --    ['terraformls'] = {},
+            terraformls = {},
             docker_compose_language_service = {},
             dockerls = {},
             graphql = {},
@@ -67,14 +65,42 @@ return {
             yamlls = {
                 yaml = {
                     schemaStore = {
-                        enable = true,
+                        enable = false,
+                    },
+                    schemas = {
+                        kubernetes = "*/*k8s*/*.{yml,yaml}",
+                        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
+                        ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
                     },
                 },
             },
             clangd = {},
+            zls = {},
+            gopls = {},
+            ts_ls = {
+                init_options = {
+                    plugins = {
+                        {
+                            name = "@vue/typescript-plugin",
+                            location = "/home/jakov/.local/share/pnpm/global/5/node_modules/@vue/typescript-plugin",
+                            languages = { "javascript", "typescript", "vue" },
+                        },
+                    },
+                },
+                filetypes = {
+                    "javascript",
+                    "typescript",
+                    "vue",
+                },
+                hahah = {},
+            },
+            -- autotools_ls = {},
         }
 
         for lsp, settings in pairs(lsps) do
+            -- if lsp == "ts_ls" then
+            --     require("notify").notify(lsp, "debug", opts)
+            -- end
             lspconfig[lsp].setup({
                 on_attach = on_attach,
                 flags = lsp_flags,
@@ -82,14 +108,14 @@ return {
                 capabilities = capabilities,
             })
         end
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = "sh",
-            callback = function()
-                vim.lsp.start({
-                    name = "bash-language-server",
-                    cmd = { "bash-language-server", "start" },
-                })
-            end,
-        })
+        -- vim.api.nvim_create_autocmd("FileType", {
+        --     pattern = "sh",
+        --     callback = function()
+        --         vim.lsp.start({
+        --             name = "bash-language-server",
+        --             cmd = { "bash-language-server", "start" },
+        --         })
+        --     end,
+        -- })
     end,
 }

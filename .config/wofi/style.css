@@ -16,15 +16,16 @@
 }
 
 #entry:selected {
-  background-color: #4fb07f;
+  background-color: #cf636c;
 }
 
 #entry {
-  background-color: #e2ddd2;
+  background-color: #2a2c2f;
+  color: #f4ebec
 }
 
 #input {
-  background-color: #e2ddd2;
+  background-color: #2a2c2f;
   border-radius: 0px;
   margin: 4px;
   padding: 4px;
