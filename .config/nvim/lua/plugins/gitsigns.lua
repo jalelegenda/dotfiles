@@ -1,7 +1,4 @@
-local set_desc = function(opts, desc)
-    opts.desc = desc
-    return opts
-end
+local common = require("core.common")
 return {
     "lewis6991/gitsigns.nvim",
     opts = {
@@ -72,29 +69,27 @@ return {
             end)
 
             -- Actions
-            local map_opts = { noremap = true, silent = true }
-            map("n", "gss", gitsigns.stage_hunk, set_desc(map_opts, "Git stage hunk"))
-            map("n", "gsr", gitsigns.reset_hunk, set_desc(map_opts, "Git reset hunk"))
-            map("v", "gsv", function()
+            map("n", "gss", gitsigns.stage_hunk, common.set_desc(common.opts, { desc = "Stage hunk" }))
+            map("n", "gsr", gitsigns.reset_hunk, common.set_desc(common.opts, { desc = "Reset hunk" }))
+            map("v", "gss", function()
                 gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-            end, set_desc(map_opts, "Git stage hunk"))
+            end, common.set_desc(common.opts, { desc = "Git stage hunk" }))
             map("v", "gsr", function()
                 gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-            end, set_desc(map_opts, "Git stage hunk"))
+            end, common.set_desc(common.opts, { desc = "Git stage hunk" }))
             -- map("n", "<leader>hS", gitsigns.stage_buffer)
             -- map("n", "<leader>hu", gitsigns.undo_stage_hunk)
             -- map("n", "<leader>hR", gitsigns.reset_buffer)
             -- map("n", "<leader>hR", gitsigns.reset_buffer)
             -- map("n", "<leader>hp", gitsigns.preview_hunk)
-            -- map("n", "<leader>hb", function()
+            -- map("n", "gsb", function()
             --     gitsigns.blame_line({ full = true })
             -- end)
-            -- map("n", "<leader>hb", gitsigns.toggle_current_line_blame)
-            -- map("n", "<leader>hd", gitsigns.diffthis)
+            map("n", "gsb", gitsigns.toggle_current_line_blame, common.set_desc(common.opts, { desc = "Toggle line blame" }))
             map("n", "gsd", function()
                 gitsigns.diffthis("~")
-            end)
-            map("n", "<leader>hd", gitsigns.toggle_deleted)
+            end, common.set_desc(common.opts, { desc = "Show file diff" }))
+            map("n", "gsl", gitsigns.toggle_deleted, common.set_desc(common.opts, { desc = "Toggle deleted lines" }))
 
             -- Text object
             map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
