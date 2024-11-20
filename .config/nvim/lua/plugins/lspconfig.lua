@@ -86,8 +86,8 @@ return {
                     plugins = {
                         {
                             name = "@vue/typescript-plugin",
-                            location = "/home/jakov/.local/share/pnpm/global/5/node_modules/@vue/typescript-plugin",
-                            languages = { "javascript", "typescript", "vue" },
+                            location = "/home/jakov/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                            languages = { "vue" },
                         },
                     },
                 },
@@ -97,27 +97,23 @@ return {
                     "vue",
                 },
             },
-            volar = {
-                init_options = {
-                    typescript = {
-                        tsdk = "~/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib",
-                    },
-                },
-                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
-            },
+            volar = {},
             -- autotools_ls = {},
         }
 
         for lsp, settings in pairs(lsps) do
-            -- if lsp == "ts_ls" then
-            --     require("notify").notify(lsp, "debug", opts)
-            -- end
-            lspconfig[lsp].setup({
+            local opts = {
                 on_attach = on_attach,
                 flags = lsp_flags,
-                settings = settings,
                 capabilities = capabilities,
-            })
+            }
+            if lsp == "ts_ls" then
+                opts.init_options = settings.init_options
+                opts.filetypes = settings.filetypes
+            else
+                opts.settings = settings
+            end
+            lspconfig[lsp].setup(opts)
         end
         -- vim.api.nvim_create_autocmd("FileType", {
         --     pattern = "sh",
