@@ -11,7 +11,7 @@ background = "#000000"
 foreground = "#ff7050"
 
 [cursor.style]
-blinking = "On"
+blinking = "Always"
 shape = "Block"
 
 [font]
@@ -33,7 +33,7 @@ style = "Italic"
 family = "Ubuntu Mono Nerd Font"
 style = "Regular"
 
-[shell]
+[terminal.shell]
 program = "/bin/tmux"
 
 [window]
@@ -41,3 +41,5 @@ decorations = "Full"
 dynamic_title = true
 opacity = 0.85
 title = "terminal"
+
+[terminal]

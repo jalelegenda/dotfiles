@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "backlight", "pulseaudio", "battery", "cpu", "idle_inhibitor", "sway/language", "tray", "clock"],
+    "modules-right": ["network", "backlight", "pulseaudio", "battery", "cpu", "custom/audio_idle_inhibitor", "sway/language", "tray", "clock"],
     "sway/workspaces": {
 	"all-outputs": true,
     },
@@ -11,7 +11,7 @@
         "format": "<span color='#cf636c'>{icon}</span> {capacity}%",
         "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc82", "\udb80\udc79"],
         "format-charging": "<span color='#cf636c'>\udb86\udc35</span> {capacity}%",
-	"format-plugged": "<span color='#cf636c'>{icon}</span> <span color='#00616c'>\udb81\udea5</span> <span>{capacity}%</span>",
+	"format-plugged": "<span color='#cf636c'>{icon}</span> <span color='#015a68'>\udb81\udea5</span> <span>{capacity}%</span>",
         "format-discharging": "<span color='#cf636c'>{icon}</span> {capacity}%",
         "interval": 10
     },
@@ -84,11 +84,16 @@
     "sway/language": {
 	"format": "<span color='#CF636C'>\uf0ac</span> {short}",
     },
-    "idle_inhibitor": {
-	"format": "{icon}",
-	"format-icons": {
-	    "activated": "<span color='#CF636C'>󰛐</span>",
-	    "deactivated":  "<span color='#CF636C'>󰛑</span>"
-	}
-    }
+    "custom/audio_idle_inhibitor": {
+	    "format": "{icon}",
+	    "exec": "sway-audio-idle-inhibit --dry-print-both-waybar",
+	    "exec-if": "which sway-audio-idle-inhibit",
+	    "return-type": "json",
+	    "format-icons": {
+		    "output": "<span color='#cf636c'>󰓃</span>",
+		    "input": "<span color='#cf636c'></span>",
+		    "output-input": "<span color='#cf636c'>󰓃 </span>",
+		    "none": ""
+	    }
+    },
 }

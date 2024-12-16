@@ -17,16 +17,20 @@
 
 #entry:selected {
   background-color: #cf636c;
+  border-radius: 0px;
 }
 
 #entry {
   background-color: #2a2c2f;
-  color: #f4ebec
+  color: #f4ebec;
+  border-radius: 0px;
 }
 
 #input {
   background-color: #2a2c2f;
+  border-color: #015a68;
   border-radius: 0px;
   margin: 4px;
   padding: 4px;
+  color: #f4ebec;
 }

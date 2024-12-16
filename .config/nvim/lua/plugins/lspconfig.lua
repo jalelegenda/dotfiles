@@ -50,7 +50,17 @@ return {
         }
 
         local lsps = {
-            basedpyright = {},
+            basedpyright = {
+                basedpyright = {
+                    analysis = {
+                        diagnosticSeverityOverrides = {
+                            reportUnusedCallResult = "none",
+                            reportAny = "none",
+                            reportUnannotatedClassAttribute = "none",
+                        },
+                    },
+                },
+            },
             lua_ls = {
                 Lua = {
                     diagnostics = {

@@ -12,6 +12,9 @@ set $coding code-oss
 set $browser firefox
 set $swaylock swaylock
 
+set $gnome_schema org.gnome.desktop.interface
+set $cursor_theme Breeze_Obsidian
+
 set $theme_main #cf636c 
 set $theme_accent #ef636c
 set $theme_contrast #cf636c 
@@ -24,14 +27,14 @@ output * {
 }
 
 ### Laptop configuration
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
+bindswitch --reload --locked lid:off exec kanshictl switch lid-opened
+bindswitch --reload --locked lid:on exec kanshictl switch lid-closed
 
 ### Idle configuration
 exec swayidle -w \
-	timeout 10 'if pgrep -x swaylock; then sudo zzz; fi' \
         timeout 300 '$swaylock' \
         timeout 420 'sudo zzz' \
+	timeout 10 'if pgrep -x swaylock; then sudo zzz; fi' \
         before-sleep '$swaylock'
 
 ### Input configuration
@@ -65,6 +68,20 @@ font pango:Ubuntu 12px
 
 client.focused $theme_accent $theme_main $theme_contrast $theme_contrast
 client.unfocused #1f202f #1f202f #eeeeee #ffffff
+
+exec_always {
+    gsettings set $gnome_schema gtk-theme 'Greybird-dark'
+    gsettings set $gnome_schema icon-theme 'Papirus'
+    gsettings set $gnome_schema cursor-theme $cursor_theme
+    gsettings set $gnome_schema cursor-size 18
+    gsettings set $gnome_schema font-name 'Ubuntu 12'
+}
+seat seat0 xcursor_theme $cursor_theme 18
+blur enable
+shadows enable
+shadow_blur_radius 80
+shadow_offset 5 10
+default_dim_inactive 0.2
 
 ### Key bindings
 # run
@@ -169,6 +186,7 @@ bindsym $mod+minus scratchpad show
 #
 # Resizing containers:
 #
+floating_maximum_size 1200 x 780
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -199,18 +217,20 @@ bindsym XF86AudioLowerVolume exec pamixer -d 5
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioMute exec pamixer -t
 
-bar {
-    swaybar_command waybar
-} 
+bar swaybar_command waybar
 
-include /etc/sway/config.d/*
-exec dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY
-exec pipewire
-exec gammastep -O 4000
-exec light -S 25
-exec alacritty
-exec nm-applet --indicator
-exec blueman-applet
-exec dunst
+exec {
+    dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY
+    pipewire
+    gammastep -O 4000
+    light -S 25
+    alacritty
+    nm-applet --indicator
+    blueman-applet
+    dunst
+    sway-audio-idle-inhibit
+}
 exec_always pkill kanshi; exec kanshi
+exec_always pkill sway-audio-idle; exec sway-audio-idle-inhibit
+include /etc/sway/config.d/*
 

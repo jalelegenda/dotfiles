@@ -87,23 +87,6 @@ require("lazy").setup({
     --         )
     --     end,
     -- },
-    -- {
-    --     "echasnovski/mini.animate",
-    --     config = true,
-    --     version = "*",
-    --     opts = {
-    --         cursor = {
-    --             timing = function(_, n)
-    --                 return 100 / n
-    --             end,
-    --         },
-    --         scroll = {
-    --             timing = function(_, n)
-    --                 return 50 / n
-    --             end,
-    --         },
-    --     },
-    -- },
     require("plugins.lspconfig"),
     require("plugins.cmp"),
     require("plugins.mason"),

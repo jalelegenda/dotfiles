@@ -53,7 +53,6 @@ return {
                         "--glob=!**/__pycache__/*",
                         "--glob=!**/.venv/*",
                     },
-                    theme = "dropdown",
                 },
             },
         })
