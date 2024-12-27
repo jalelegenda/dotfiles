@@ -8,24 +8,26 @@ window > box {
 }
 
 /* Omit side margins for left-most and right-most widgets. */
-.modules-left, .modules-right {
-  border: 2px solid #cf636c;
+.modules-left,
+.modules-right {
+  border: 2px solid #2e3440;
 }
 
 window#waybar {
   background: transparent;
-  color: #f4ebec;
+  color: #d8dee9;
 }
 
 window#waybar.empty #window {
   background-color: rgba(0, 0, 0, 0);
+  color: rgba(0, 0, 0, 0);
 }
 
 #window {
   margin: 0 10px;
   padding: 0 10px;
-  background-color: #cf636c;
-  color: #2a2c2f;
+  background-color: #2e3440;
+  color: #d8dee9;
   border-radius: 22px;
 }
 
@@ -35,36 +37,40 @@ button:hover {
 }
 
 #workspaces button {
+  border: none;
+  padding: 3 7px;
   box-shadow: none;
   transition: all 200ms ease;
   border-radius: 0;
-  background-color: #2a2c2f;
-  color: #f4ebec;
-}
-
-#workspaces button {
-  /* background-color: inherit; */
+  background-color: #3b4252;
+  color: #d8dee9;
   box-shadow: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
 }
 
 #workspaces button:hover,
 #workspaces button.focused:hover {
+  border: none;
   transition: all 200ms ease;
   box-shadow: none;
-  border: solid 1px #ef636c;
+  border: solid 1px #8fbcbb;
   text-shadow: none;
-  background-color: #ef636c;
+  background-color: #8fbcbb;
   color: #2a2c2f;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
 }
 
 #clock,
 #workspaces button.focused {
-  background-color: #cf636c;
-  color: #2a2c2f;
+  border: none;
+  background-color: #2e3440;
+  color: #d8dee9;
+  border-bottom: 2px solid #5e81ac;
 }
 
 #clock {
   padding: 0 10px;
+  border-bottom: 0;
 }
 
 #battery,
@@ -84,13 +90,25 @@ button:hover {
 #language,
 #mpd {
   padding: 0 10px;
-  background-color: #2a2c2f;
+  background-color: #3b4252;
 }
 
 .modules-right {
-  background-color: #2a2c2f;
+  background-color: #3b4252;
 }
 
 .modules-left {
-  background-color: #2a2c2f;
+  background-color: #3b4252;
+}
+
+#taskbar button {
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+#taskbar button.active {
+  border: none;
+  border-bottom: 2px solid #5e81ac;
+  border-radius: 0;
+  background-color: #2e3440;
 }
