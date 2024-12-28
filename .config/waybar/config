@@ -8,7 +8,7 @@
         "format": "<span color='#d08770'>{icon}</span> {capacity}%",
         "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc82", "\udb80\udc79"],
         "format-charging": "<span color='#d08770'>\udb86\udc35</span> {capacity}%",
-	"format-plugged": "<span color='#d08770'>{icon}</span> <span color='#015a68'>\udb81\udea5</span> <span>{capacity}%</span>",
+	"format-plugged": "<span color='#d08770'>{icon}</span> <span color='#b48ead'>\udb81\udea5</span> <span>{capacity}%</span>",
         "format-discharging": "<span color='#d08770'>{icon}</span> {capacity}%",
         "interval": 10
     },

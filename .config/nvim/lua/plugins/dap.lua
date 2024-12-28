@@ -71,7 +71,19 @@ return {
                     port = 5678,
                 },
             },
-
+            {
+                name = "Pytest: Current File",
+                type = "python",
+                request = "launch",
+                module = "pytest",
+                args = {
+                    "${file}",
+                    "-rxXs",
+                    "--reuse-db",
+                    "--no-cov",
+                },
+                console = "integratedTerminal",
+            },
         }
 
         common.map(

@@ -16,19 +16,19 @@
 }
 
 #entry:selected {
-  background-color: #cf636c;
+  background-color: #8fbcbb;
   border-radius: 0px;
 }
 
 #entry {
-  background-color: #2a2c2f;
-  color: #f4ebec;
+  background-color: #2e3440;
+  color: #d8dee9;
   border-radius: 0px;
 }
 
 #input {
-  background-color: #2a2c2f;
-  border-color: #015a68;
+  background-color: #2e3440;
+  border-color: #8fbcbb;
   border-radius: 0px;
   margin: 4px;
   padding: 4px;

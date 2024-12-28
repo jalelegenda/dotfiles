@@ -43,17 +43,24 @@ require("lazy").setup({
         end,
     },
     {
-        "neanias/everforest-nvim",
+        "gbprod/nord.nvim",
         lazy = false,
         priority = 1000,
         config = function()
-            require("everforest").setup({
-                italics = true,
-                transparent_background_level = 1,
+            require("nord").setup({
+                transparent = true,
             })
-            vim.cmd([[colorscheme everforest]])
+            vim.cmd([[colorscheme nord]])
         end,
     },
+    -- {
+    --     "AlexvZyl/nordic.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         require("nordic").load({ transparent = { bg = true, float = true } })
+    --     end,
+    -- },
     {
         "folke/persistence.nvim",
         {
@@ -67,6 +74,12 @@ require("lazy").setup({
         event = "VeryLazy",
         config = function()
             require("textcase").setup({})
+        end,
+    },
+    {
+        "norcalli/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup()
         end,
     },
     -- {

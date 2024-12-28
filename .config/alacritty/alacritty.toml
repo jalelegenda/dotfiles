@@ -1,14 +1,14 @@
 [colors.primary]
-background = "#1d1d1d"
+background = "#2e3440"
 foreground = "#f3fef9"
 
 [colors.search.focused_match]
-background = "#ff7050"
-foreground = "#000000"
+background = "#bf616a"
+foreground = "#d8dee9"
 
 [colors.search.matches]
-background = "#000000"
-foreground = "#ff7050"
+background = "#8fbcbb"
+foreground = "#d8dee9"
 
 [cursor.style]
 blinking = "Always"

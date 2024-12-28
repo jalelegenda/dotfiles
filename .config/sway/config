@@ -15,15 +15,14 @@ set $swaylock swaylock
 set $gnome_schema org.gnome.desktop.interface
 set $cursor_theme Breeze_Obsidian
 
-set $theme_main #cf636c 
-set $theme_accent #ef636c
-set $theme_contrast #cf636c 
-set $theme_contrast_accent #cf636c 
-set $theme_background #2a2c2f 
+set $nord0 #2e3440
+set $nord3 #4c566a
+set $nord4 #d8dee9
+set $nord7 #5e81ac
 
 ### Output configuration
 output * {
-    bg /home/jakov/Pictures/wallpaper/rock_beach_brittany.jpeg fill
+    bg /home/jakov/Pictures/wallpaper/cloud_mountains.jpeg fill
 }
 
 ### Laptop configuration
@@ -66,11 +65,10 @@ smart_borders disabled
 
 font pango:Ubuntu 12px
 
-client.focused $theme_accent $theme_main $theme_contrast $theme_contrast
-client.unfocused #1f202f #1f202f #eeeeee #ffffff
-
+client.focused $nord3 $nord4 $nord0 $nord7
+client.unfocused $nord0 $nord0 #e5e9f0 #eceff4
 exec_always {
-    gsettings set $gnome_schema gtk-theme 'Greybird-dark'
+    gsettings set $gnome_schema gtk-theme 'Nordic'
     gsettings set $gnome_schema icon-theme 'Papirus'
     gsettings set $gnome_schema cursor-theme $cursor_theme
     gsettings set $gnome_schema cursor-size 18
