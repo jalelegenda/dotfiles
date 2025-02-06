@@ -50,6 +50,7 @@ return {
         }
 
         local lsps = {
+            -- pylsp = {},
             basedpyright = {
                 basedpyright = {
                     analysis = {
@@ -109,6 +110,10 @@ return {
             },
             volar = {},
             -- autotools_ls = {},
+            gdscript = {
+                cmd = { "nvim", "--listen", "/tmp/godot.pipe" },
+                capabilities = vim.lsp.protocol.make_client_capabilities(),
+            },
         }
 
         for lsp, settings in pairs(lsps) do

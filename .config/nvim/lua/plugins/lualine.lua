@@ -21,6 +21,12 @@ return {
                         color = { fg = "#d08770" },
                     },
                 },
+                lualine_x = {
+                    { "searchcount" },
+                    { "encoding" },
+                    { "fileformat" },
+                    { "filetype" },
+                },
             },
             options = {
                 theme = "nord",

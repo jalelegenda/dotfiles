@@ -46,14 +46,18 @@ require("lazy").setup({
         "gbprod/nord.nvim",
         lazy = false,
         priority = 1000,
+    },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
         config = function()
-            require("nord").setup({
+            require("catppuccin").setup({
                 transparent = true,
             })
-            vim.cmd([[colorscheme nord]])
+            vim.cmd([[colorscheme catppuccin]])
         end,
-    },
-    -- {
+    }, -- {
     --     "AlexvZyl/nordic.nvim",
     --     lazy = false,
     --     priority = 1000,
@@ -81,6 +85,12 @@ require("lazy").setup({
         config = function()
             require("colorizer").setup()
         end,
+    },
+    {
+
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+        opts = {},
     },
     -- {
     --     "kndndrj/nvim-dbee",

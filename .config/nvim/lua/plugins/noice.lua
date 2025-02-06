@@ -1,3 +1,5 @@
+local common = require("core.common")
+
 return {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -43,4 +45,13 @@ return {
         "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify",
     },
+    config = function(_, opts)
+        common.map(
+            "n",
+            "<leader>dd",
+            "<Cmd>NoiceDismiss<CR>",
+            common.set_desc(common.opts, { desc = "Dismiss notifications" })
+        )
+        require("noice").setup(opts)
+    end,
 }

@@ -19,12 +19,12 @@ return {
         dap.listeners.after.event_initialized["dapui_config"] = function()
             dapui.open()
         end
-        dap.listeners.before.event_terminated["dapui_config"] = function()
-            dapui.close()
-        end
-        dap.listeners.before.event_exited["dapui_config"] = function()
-            dapui.close()
-        end
+        -- dap.listeners.before.event_terminated["dapui_config"] = function()
+        --     dapui.close()
+        -- end
+        -- dap.listeners.before.event_exited["dapui_config"] = function()
+        --     dapui.close()
+        -- end
 
         dap.adapters.python = {
             type = "executable",
@@ -34,6 +34,11 @@ return {
         dap.adapters.python_attach = {
             type = "server",
             port = 5678,
+        }
+        dap.adapters.godot = {
+            type = "server",
+            host = "127.0.0.1",
+            port = 6006,
         }
 
         dap.configurations.python = {
@@ -63,6 +68,27 @@ return {
                 justMyCode = false,
             },
             {
+                name = "Launch gunicorn Flask",
+                type = "python",
+                request = "launch",
+                module = "envdir",
+                args = {
+                    ".envdir",
+                    "gunicorn",
+                    "-b",
+                    "127.0.0.1:5000",
+                    "core.flask.dispatch:app",
+                    "--reload",
+                    "--timeout",
+                    "120",
+                },
+                env = {
+                    PYTHONPATH = vim.fn.getcwd() .. "/importer",
+                },
+                console = "integratedTerminal",
+                justMyCode = false,
+            },
+            {
                 name = "Attach to Django",
                 type = "python_attach",
                 request = "attach",
@@ -72,17 +98,26 @@ return {
                 },
             },
             {
-                name = "Pytest: Current File",
+                name = "Pytest: current file",
                 type = "python",
                 request = "launch",
                 module = "pytest",
                 args = {
+                    "-vv",
+                    "-s",
                     "${file}",
-                    "-rxXs",
-                    "--reuse-db",
-                    "--no-cov",
                 },
                 console = "integratedTerminal",
+            },
+        }
+
+        dap.configurations.gdscript = {
+            {
+                type = "godot",
+                request = "launch",
+                name = "Launch scene",
+                project = "${workspaceFolder}",
+                launch_scene = true,
             },
         }
 
@@ -99,5 +134,6 @@ return {
         common.map("n", "<leader>dpr", function()
             dap_python.test_method()
         end, common.set_desc(common.opts, { desc = "Run test method" }))
+        common.map("n", "<leader>dc", function() dapui.close() end, common.set_desc(common.opts, { desc = "Close DAP UI"}))
     end,
 }
