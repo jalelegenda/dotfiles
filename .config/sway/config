@@ -12,8 +12,9 @@ set $coding code-oss
 set $browser firefox
 set $swaylock swaylock
 
+set $nordic_theme "Nordic"
 set $gnome_schema org.gnome.desktop.interface
-set $cursor_theme Breeze_Obsidian
+set $cursor_theme Adwaita
 
 set $nord0 #2e3440
 set $nord3 #4c566a
@@ -68,18 +69,19 @@ font pango:Ubuntu 12px
 client.focused $nord3 $nord4 $nord0 $nord7
 client.unfocused $nord0 $nord0 #e5e9f0 #eceff4
 exec_always {
-    gsettings set $gnome_schema gtk-theme 'Nordic'
-    gsettings set $gnome_schema icon-theme 'Papirus'
+    gsettings set $gnome_schema gtk-theme $nordic_theme
+    gsettings set org.gnome.desktop.wm.preferences theme $nordic_theme
+    gsettings set $gnome_schema icon-theme "Papirus"
     gsettings set $gnome_schema cursor-theme $cursor_theme
     gsettings set $gnome_schema cursor-size 18
-    gsettings set $gnome_schema font-name 'Ubuntu 12'
+    gsettings set $gnome_schema font-name "Ubuntu 12"
 }
 seat seat0 xcursor_theme $cursor_theme 18
 blur enable
 shadows enable
-shadow_blur_radius 80
+shadow_blur_radius 10
 shadow_offset 5 10
-default_dim_inactive 0.2
+default_dim_inactive 0.1
 
 ### Key bindings
 # run
@@ -184,7 +186,6 @@ bindsym $mod+minus scratchpad show
 #
 # Resizing containers:
 #
-floating_maximum_size 1200 x 780
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -225,10 +226,9 @@ exec {
     alacritty
     nm-applet --indicator
     blueman-applet
-    dunst
+    mako
     sway-audio-idle-inhibit
 }
-exec_always pkill kanshi; exec kanshi
-exec_always pkill sway-audio-idle; exec sway-audio-idle-inhibit
+exec_always pkill kanshi; exec kanshi;
 include /etc/sway/config.d/*
 

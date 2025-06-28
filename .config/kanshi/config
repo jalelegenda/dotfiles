@@ -1,0 +1,109 @@
+output 'BOE 0x0A35 Unknown' alias $laptop
+output 'AOC Q3279WG5B 0x00000B16' alias $desk 
+
+output 'Dell Inc. DELL P2419H 98RPH73' alias $work_left
+output 'Dell Inc. DELL P2419H 92QPH73' alias $work_right 
+
+output 'Dell Inc. DELL P2422H 8F92ZF3' alias $zagreb_right
+output 'Dell Inc. DELL P2422H JY92ZF3' alias $zagreb_left
+
+output 'Dell Inc. DELL P2419H 6FMLX63' alias $vule_right
+output 'Dell Inc. DELL P2419H 4JTQX63' alias $vule_left
+
+profile lid_opened {
+    output $laptop {
+	scale 1
+	position 2560,240 
+        mode 1920x1200
+    }
+
+    output $desk {
+	scale 1
+	position 0,0 
+        mode 2560x1440
+    }
+
+    exec swaymsg workspace 1, move workspace to $desk
+    exec swaymsg workspace 2, move workspace to $laptop
+}
+
+profile lid_opened {
+    output $laptop {
+	scale 1
+	position 960,1080 
+        mode 1920x1200
+    }
+
+    output $work_left {
+	scale 1
+	position 0,0 
+        mode 1920x1080
+    }
+
+    output $work_right {
+	scale 1
+	position 1920,0 
+        mode 1920x1080
+    }
+
+    exec swaymsg workspace 1, move workspace to $work_left
+    exec swaymsg workspace 2, move workspace to $work_right
+    exec swaymsg workspace 3, move workspace to $laptop
+}
+
+profile lid_opened {
+    output $laptop {
+	scale 1
+	position 960,1080 
+	mode 1920x1200
+    }
+
+    output $vule_left {
+	scale 1
+	position 0,0 
+	mode 1920x1080
+    }
+
+    output $vule_right {
+	scale 1
+	position 1920,0 
+	mode 1920x1080
+    }
+
+    exec swaymsg workspace 1, move workspace to $work_left
+    exec swaymsg workspace 2, move workspace to $work_right
+    exec swaymsg workspace 3, move workspace to $laptop
+}
+
+profile lid_opened {
+    output $laptop {
+	scale 1
+	position 960,1080 
+        mode 1920x1200
+    }
+
+    output $zagreb_left {
+	scale 1
+	position 0,0 
+        mode 1920x1080
+    }
+
+    output $zagreb_right {
+	scale 1
+	position 1920,0 
+        mode 1920x1080
+    }
+
+    exec swaymsg workspace 1, move workspace to $zagreb_left
+    exec swaymsg workspace 2, move workspace to $zagreb_right
+    exec swaymsg workspace 3, move workspace to $laptop
+}
+
+profile lid_closed {
+    output $laptop disable
+    output $desk {
+	scale 1
+	position 0,0 
+        mode 2560x1440
+    }
+}

@@ -3,6 +3,9 @@ alias k="kubectl"
 alias v="nvim"
 alias brc=". ~/.bashrc"
 alias eg="env | grep -i"
+alias vg="nvim --listen /tmp/godot.pipe"
+alias se="sudoedit"
+alias vc="nvim -c 'cd ~/.config/nvim' ~/.config/nvim/init.lua"
 
 alias televend="PYTHONUNBUFFERED=1;DJANGO_SETTINGS_MODULE=televend3.settings.local;PYDEVD_USE_CYTHON=NO;CONF=dev python -m debugpy --listen 5678 --configure-subProcess False manage.py runserver --noreload"
 
@@ -19,16 +22,25 @@ function dockerstop()
     docker stop $(docker ps -q)
 }
 
-function justvenv()
+function venv()
 {
     . ../venv/$(dirname)/bin/activate
 }
 
-function intis()
+function fixbt()
 {
-    [ -d ../venv/$(dirname) ] || mkdir -p ../venv/$(dirname) 2>/dev/null
-    ~/.pyenv/versions/3.7.17/bin/python -m venv ../venv/$(dirname) 2>/dev/null
-    . ../venv/$(dirname)/bin/activate
-    ../venv/$(dirname)/bin/pip install pipenv==2021.11.23
-}
+    rsv stop bluetoothd
+    mods=("btusb" "btrtl" "btmtk" "btintel" "btbcm" "bnep" "hci_vhci" "rfcomm" "bluetooth")
+    len=${#mods[@]}
+    for mod in ${mods[@]}
+    do
+        sudo modprobe -r $mod
+    done
 
+    for ((i=len-1; i>=0; i--))
+    do
+	sudo modprobe ${mods[i]}
+    done
+    rsv start bluetoothd
+    echo "Bluetooth mods reloaded, bluetoothd service restarted."
+}

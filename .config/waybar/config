@@ -6,9 +6,9 @@
         "bat": "BAT0",
     "battery": {
         "format": "<span color='#d08770'>{icon}</span> {capacity}%",
-        "format-icons": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc82", "\udb80\udc79"],
-        "format-charging": "<span color='#d08770'>\udb86\udc35</span> {capacity}%",
-	"format-plugged": "<span color='#d08770'>{icon}</span> <span color='#b48ead'>\udb81\udea5</span> <span>{capacity}%</span>",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "format-charging": "<span color='#d08770'>{icon}</span><span color='#a3be8c'>󱐋</span> {capacity}%",
+	"format-plugged": "<span color='#d08770'>{icon}</span> <span color='#88c0d0'></span> <span>{capacity}%</span>",
         "format-discharging": "<span color='#d08770'>{icon}</span> {capacity}%",
         "interval": 10
     },
@@ -16,7 +16,8 @@
         "format": "<span color='#b48ead'>{icon}</span> <span>{percent}%</span>",
         "format-icons": ["\udb80\udcde", "\udb80\udcdf", "\udb80\udcdd", "\udb80\udce0"],
         "on-scroll-up": "light -A 2",
-        "on-scroll-down": "light -U 2"
+        "on-scroll-down": "light -U 2",
+	"tooltip": false
     },
     "clock": {
 	"format": "{:%H:%M}  ",
@@ -32,7 +33,7 @@
 		"months":     "<span color='#d8dee9'><b>{}</b></span>",
 		"days":       "<span color='#d8dee9'><b>{}</b></span>",
 		"weeks":      "<span color='#81a1c1'><b>W{}</b></span>",
-		"weekdays":   "<span color='#d8dee9'><b>{}</b></span>",
+		"weekdays":   "<span color='#81a1c1'><b>{}</b></span>",
 		"today":      "<span color='#bf616a'><b><i>{}</i></b></span>"
 	    }
 	},
@@ -76,6 +77,8 @@
     "sway/window": {
 	"format": "{}",
 	"icon": true,
+	"on-click-middle": "swaymsg kill",
+	"max-length": 50
     },
     "tray": {
         "icon-size": 18

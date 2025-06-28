@@ -48,14 +48,19 @@
 .steampath
 .steampid
 .yarnrc
+zoom.conf
 
 # config directories
+FreeCAD
 GIMP
 JetBrains
 Microsoft*
 Unknown*
 VirtualBox
-ardour6
+Seafile
+Slack
+Thunar
+ardour*
 asciiname
 autostart
 calibre
@@ -65,21 +70,29 @@ configstore
 dconf
 dolphin-emu
 gcloud
-glib-2.0
+glib-*
+go/
+godot/
 gpick
-gtk-2.0
-gtk-3.0
+gtk-*
 higan
 hiro
 libreoffice
+krita*
+mako/
 nextjs-nodejs
 nicotine
 obs-studio
 pulse
-qtfm6
+pypoetry
+retroarch
+qBittorent
+qtfm*
 session
 snes9x
+tmux/
 visualboyadvance*
+xfce4
 yarn
 
 # config files
