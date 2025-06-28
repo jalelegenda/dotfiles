@@ -1,4 +1,9 @@
 local common = require("core.common")
+local function get_site_packages()
+    local output = vim.fn.systemlist("python -c 'import site; print(site.getsitepackages()[0])'")
+    return output[1]
+end
+local ff_search_dirs = {}
 return {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
@@ -16,13 +21,14 @@ return {
             defaults = {
                 vimgrep_arguments = {
                     "rg",
-                    "--follow", -- Follow symbolic links
+                    -- "--follow", -- Follow symbolic links
                     "--hidden", -- Search for hidden files
                     "--no-heading", -- Don't group matches by each file
                     "--with-filename", -- Print the file path with the matched lines
                     "--line-number", -- Show line numbers
                     "--column", -- Show column numbers
                     "--smart-case", -- Smart case search
+                    "--auto-hybrid-regex", --pcre2
 
                     -- Exclude some patterns from search
                     "--glob=!**/.git/*",
@@ -57,8 +63,24 @@ return {
             },
         })
 
-        common.map("n", "<leader>ff", builtin.find_files, common.set_desc(common.opts, { desc = "Search for files" }))
-        common.map("n", "<leader>fw", builtin.live_grep, common.set_desc(common.opts, { desc = "Search in files" }))
+        common.map("n", "<leader>ff", function()
+            builtin.find_files({
+                search_dirs = {
+                    vim.loop.cwd(),
+                    get_site_packages(),
+                },
+            })
+        end, common.set_desc(common.opts, { desc = "Search for files" }))
+        common.map("n", "<leader>fw", function()
+            builtin.live_grep({
+                search_dirs = {
+                    search_dirs = {
+                        vim.loop.cwd(),
+                        get_site_packages(),
+                    },
+                },
+            })
+        end, common.set_desc(common.opts, { desc = "Search in files" }))
         common.map("n", "<leader>fb", builtin.buffers, common.set_desc(common.opts, { desc = "List buffers" }))
         common.map(
             "n",
@@ -75,7 +97,7 @@ return {
         common.map(
             "n",
             "<leader>fc",
-            builtin.lsp_dynamic_workspace_symbols,
+            builtin.lsp_workspace_symbols,
             common.set_desc(common.opts, { desc = "List workspace symbols" })
         )
         common.map("n", "<leader>fR", builtin.registers, common.set_desc(common.opts, { desc = "List registers" }))

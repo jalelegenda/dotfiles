@@ -11,25 +11,28 @@ return {
                 lua = { "stylua" },
                 -- Conform will run multiple formatters sequentially
                 python = {
-                    -- "ruff_format",
-                    "isort",
-                    "black",
-                    "autoflake",
+                    "ruff_fix",
+                    "ruff_format",
+                    -- "isort",
+                    -- "black",
+                    -- "autoflake",
                 },
                 -- Use a sub-list to run only the first available formatter
                 javascript = { "prettierd", "prettier" },
                 yaml = { "prettier" },
                 docker = { "prettier" },
                 css = { "prettier" },
+                json = { "prettierd", "prettier" },
+                sql = { "pgformatter", "sql-formater" },
             },
             formatters = {
                 autoflake = {
                     command = "autoflake",
                     args = function(_, bufnr)
                         return {
+                            "--in-place",
                             "--remove-unused-variables",
                             "--remove-all-unused-imports",
-                            "--in-place",
                             vim.api.nvim_buf_get_name(bufnr.buf),
                         }
                     end,
@@ -44,6 +47,6 @@ return {
         --     },
         -- }
         --
-        common.map({ "n", "v" }, "<leader>F", conform.format, common.opts)
+        common.map({ "n", "v" }, "<leader>F", conform.format, common.set_desc(common.opts, { desc = "Format file" }))
     end,
 }

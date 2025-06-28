@@ -11,36 +11,53 @@ return {
             "n",
             "<leader>e",
             vim.diagnostic.open_float,
-            common.set_desc(common.opts, "Open diagnostics in floating window")
+            common.set_desc(common.opts, { desc = "Open diagnostics in floating window" })
         )
-        common.map("n", "[d", vim.diagnostic.goto_prev, common.set_desc(common.opts, "Go to previous diagnostic"))
-        common.map("n", "]d", vim.diagnostic.goto_next, common.set_desc(common.opts, "Go to next diagnostic"))
-        common.map("n", "<leader>q", vim.diagnostic.setloclist, common.set_desc(common.opts, "Open diagnostic list"))
+        common.map(
+            "n",
+            "[d",
+            vim.diagnostic.goto_prev,
+            common.set_desc(common.opts, { desc = "Go to previous diagnostic" })
+        )
+        common.map(
+            "n",
+            "]d",
+            vim.diagnostic.goto_next,
+            common.set_desc(common.opts, { desc = "Go to next diagnostic" })
+        )
+        common.map(
+            "n",
+            "<leader>q",
+            vim.diagnostic.setloclist,
+            common.set_desc(common.opts, { desc = "Open diagnostic list" })
+        )
 
         local on_attach = function(client, bufnr)
             -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
-            common.map("n", "glh", vim.lsp.buf.hover, common.set_desc(bufopts, "Hover info"))
-            -- common.map("n", "glD", vim.lsp.buf.declaration, common.set_desc(common.opts, "Go to declaration"))
-            common.map("n", "gli", vim.lsp.buf.implementation, common.set_desc(bufopts, "Navigate to implementation"))
+            common.map("n", "<leader>h", vim.lsp.buf.hover, common.set_desc(bufopts, { desc = "Hover info" }))
             common.map("i", "<C-l>", vim.lsp.buf.signature_help, bufopts)
-            common.map("n", "glwa", vim.lsp.buf.add_workspace_folder, common.set_desc(bufopts, "Add workspace folder"))
+            common.map(
+                "n",
+                "glwa",
+                vim.lsp.buf.add_workspace_folder,
+                common.set_desc(bufopts, { desc = "Add workspace folder" })
+            )
             common.map(
                 "n",
                 "glwr",
                 vim.lsp.buf.remove_workspace_folder,
-                common.set_desc(bufopts, "Remove workspace folder")
+                common.set_desc(bufopts, { desc = "Remove workspace folder" })
             )
-            common.map("n", "gltd", vim.lsp.buf.type_definition, bufopts)
-            common.map("n", "glr", vim.lsp.buf.rename, common.set_desc(bufopts, "Rename symbol"))
-            common.map("n", "glc", vim.lsp.buf.code_action, common.set_desc(bufopts, "Code actions"))
+            common.map("n", "glr", vim.lsp.buf.rename, common.set_desc(bufopts, { desc = "Rename symbol" }))
+            common.map("n", "glc", vim.lsp.buf.code_action, common.set_desc(bufopts, { desc = "Code actions" }))
             common.map(
                 "n",
                 "gla",
                 require("telescope.builtin").lsp_references,
-                common.set_desc(bufopts, "List all references")
+                common.set_desc(bufopts, { desc = "List all references" })
             )
         end
 
@@ -58,7 +75,9 @@ return {
                             reportUnusedCallResult = "none",
                             reportAny = "none",
                             reportUnannotatedClassAttribute = "none",
+                            reportImplicitStringConcatenation = "none",
                         },
+                        autoImportCompletions = true,
                     },
                 },
             },
@@ -114,6 +133,9 @@ return {
                 cmd = { "nvim", "--listen", "/tmp/godot.pipe" },
                 capabilities = vim.lsp.protocol.make_client_capabilities(),
             },
+            djlsp = {},
+            buf_ls = {},
+            jsonls = {},
         }
 
         for lsp, settings in pairs(lsps) do

@@ -1,4 +1,12 @@
 local common = require("core.common")
+local random = math.random
+local function uuid()
+    local template = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+    return string.gsub(template, "[xy]", function(c)
+        local v = (c == "x") and random(0, 0xf) or random(8, 0xb)
+        return string.format("%x", v)
+    end)
+end
 return {
     "mfussenegger/nvim-dap",
     dependencies = {
@@ -42,6 +50,18 @@ return {
         }
 
         dap.configurations.python = {
+            {
+                name = "launch python script",
+                type = "python",
+                request = "launch",
+                program = "${file}",
+                pythonPath = "${workspaceFolder}/.venv/bin/python",
+                env = {
+                    PYTHONPATH = vim.fn.getcwd(),
+                },
+                justMyCode = false,
+                subProcess = false,
+            },
             {
                 name = "Launch Django",
                 type = "python",
@@ -109,6 +129,41 @@ return {
                 },
                 console = "integratedTerminal",
             },
+            {
+                name = "Pytest/django: current file",
+                type = "python",
+                request = "launch",
+                module = "pytest",
+                args = {
+                    "--reuse-db",
+                    "--no-cov",
+                    "-rxXs",
+                    "${file}",
+                },
+                console = "integratedTerminal",
+            },
+            {
+                name = "BTT worker",
+                type = "python",
+                request = "launch",
+                module = "celery",
+                args = {
+                    "-A",
+                    "service.background_processing.celery_worker",
+                    "worker",
+                    "--loglevel=info",
+                    "-Q",
+                    "authorization-service-background-queue",
+                    "-n",
+                    uuid(),
+                    "--max-tasks-per-child",
+                    "100",
+                    "--concurrency",
+                    "1",
+                    "--prefetch-multiplier",
+                    "1",
+                },
+            },
         }
 
         dap.configurations.gdscript = {
@@ -134,6 +189,8 @@ return {
         common.map("n", "<leader>dpr", function()
             dap_python.test_method()
         end, common.set_desc(common.opts, { desc = "Run test method" }))
-        common.map("n", "<leader>dc", function() dapui.close() end, common.set_desc(common.opts, { desc = "Close DAP UI"}))
+        common.map("n", "<leader>dc", function()
+            dapui.toggle()
+        end, common.set_desc(common.opts, { desc = "Close DAP UI" }))
     end,
 }

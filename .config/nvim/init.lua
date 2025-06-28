@@ -4,6 +4,13 @@ require("core.keymap")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
+local excludes = {
+    "minuet",
+    "rest",
+    "dbee",
+    "toggleterm",
+}
+
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
         "git",
@@ -17,8 +24,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    { "L3MON4D3/LuaSnip", lazy = true },
-    { "rafamadriz/friendly-snippets" },
     { "Pocco81/auto-save.nvim", config = true },
     { "echasnovski/mini.align", config = true },
     { "echasnovski/mini.pairs", config = true },
@@ -52,10 +57,7 @@ require("lazy").setup({
         name = "catppuccin",
         priority = 1000,
         config = function()
-            require("catppuccin").setup({
-                transparent = true,
-            })
-            vim.cmd([[colorscheme catppuccin]])
+            vim.cmd([[colorscheme catppuccin-frappe]])
         end,
     }, -- {
     --     "AlexvZyl/nordic.nvim",
@@ -86,46 +88,9 @@ require("lazy").setup({
             require("colorizer").setup()
         end,
     },
-    {
 
-        "MeanderingProgrammer/render-markdown.nvim",
-        dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-        opts = {},
-    },
-    -- {
-    --     "kndndrj/nvim-dbee",
-    --     dependencies = {
-    --         "MunifTanjim/nui.nvim",
-    --     },
-    --     build = function()
-    --         -- Install tries to automatically detect the install method.
-    --         -- if it fails, try calling it with one of these parameters:
-    --         --    "curl", "wget", "bitsadmin", "go"
-    --         require("dbee").install()
-    --     end,
-    --     config = function()
-    --         local dbee = require("dbee")
-    --         dbee.setup(
-    --             map("n", "<leader>-", dbee.open(), set_desc(common.opts, "Open Dbee UI"))
-    --         )
-    --     end,
-    -- },
-    require("plugins.lspconfig"),
-    require("plugins.cmp"),
-    require("plugins.mason"),
-    require("plugins.gitsigns"),
-    require("plugins.telescope"),
-    require("plugins.lualine"),
-    require("plugins.treesitter"),
-    require("plugins.dap"),
-    require("plugins.conform"),
-    require("plugins.nvim_tree"),
-    require("plugins.noice"),
-    require("plugins.barbar"),
-    require("plugins.yaml_companion"),
-    require("plugins.vim_illuminate"),
-    require("plugins.yanky"),
-    require("plugins.whichkey"),
+    -- Dynamically load all plugins from the plugins directory
+    unpack(common.require_plugins(excludes)),
 }, {
     ui = {
         border = "single",
@@ -139,3 +104,5 @@ common.map(
     [[<cmd>lua require("persistence").load()<cr>]],
     common.set_desc(common.opts, { desc = "Load directory session" })
 )
+vim.lsp.set_log_level("error")
+require("luasnip.loaders.from_vscode").lazy_load()

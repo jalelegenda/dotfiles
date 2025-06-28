@@ -14,4 +14,3 @@ vim.g.netrw_altv = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- vim.lsp.set_log_level('debug')
