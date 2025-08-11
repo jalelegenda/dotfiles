@@ -83,7 +83,7 @@ return {
                 type = "python",
                 request = "launch",
                 module = "uvicorn",
-                args = { "service.main:app", "--host", "0.0.0.0", "--port", "8001" },
+                args = { "app.main:app", "--host", "0.0.0.0", "--port", "8001" },
                 console = "integratedTerminal",
                 justMyCode = false,
             },

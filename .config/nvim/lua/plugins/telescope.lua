@@ -1,8 +1,4 @@
 local common = require("core.common")
-local function get_site_packages()
-    local output = vim.fn.systemlist("python -c 'import site; print(site.getsitepackages()[0])'")
-    return output[1]
-end
 local ff_search_dirs = {}
 return {
     "nvim-telescope/telescope.nvim",
@@ -57,7 +53,7 @@ return {
                         "--glob=!**/yarn.lock",
                         "--glob=!**/package-lock.json",
                         "--glob=!**/__pycache__/*",
-                        "--glob=!**/.venv/*",
+                        -- "--glob=!**/.venv/*",
                     },
                 },
             },
@@ -66,8 +62,8 @@ return {
         common.map("n", "<leader>ff", function()
             builtin.find_files({
                 search_dirs = {
-                    vim.loop.cwd(),
-                    get_site_packages(),
+                    vim.uv.cwd(),
+                    vim.fn.getenv("VIRTUAL_ENV"),
                 },
             })
         end, common.set_desc(common.opts, { desc = "Search for files" }))
@@ -75,7 +71,7 @@ return {
             builtin.live_grep({
                 search_dirs = {
                     search_dirs = {
-                        vim.loop.cwd(),
+                        vim.uv.cwd(),
                         get_site_packages(),
                     },
                 },

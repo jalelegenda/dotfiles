@@ -24,6 +24,7 @@ return {
                 css = { "prettier" },
                 json = { "prettierd", "prettier" },
                 sql = { "pgformatter", "sql-formater" },
+                terraform = { "terraform_fmt" },
             },
             formatters = {
                 autoflake = {
@@ -31,8 +32,8 @@ return {
                     args = function(_, bufnr)
                         return {
                             "--in-place",
-                            "--remove-unused-variables",
                             "--remove-all-unused-imports",
+                            "--remove-unused-variables",
                             vim.api.nvim_buf_get_name(bufnr.buf),
                         }
                     end,
