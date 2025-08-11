@@ -20,15 +20,16 @@ set $nord0 #2e3440
 set $nord3 #4c566a
 set $nord4 #d8dee9
 set $nord7 #5e81ac
-
+set $resize "resize: [h]width-, [j]height+, [k]height-, [l]width+"
+set $exit "exit: [s]leep, [p]oweroff, [r]eboot, [l]ogout"
 ### Output configuration
 output * {
     bg /home/jakov/Pictures/wallpaper/cloud_mountains.jpeg fill
 }
 
 ### Laptop configuration
-bindswitch --reload --locked lid:off exec kanshictl switch lid-opened
-bindswitch --reload --locked lid:on exec kanshictl switch lid-closed
+bindswitch --reload --locked lid:off exec kanshictl switch lid_opened
+bindswitch --reload --locked lid:on exec ~/.config/sway/lid_detection
 
 ### Idle configuration
 exec swayidle -w \
@@ -97,9 +98,9 @@ bindsym $mod+x exec $fexplorer
 # shell
 bindsym $mod+q kill
 bindsym $mod+c reload
-bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'pkill pipewire && swaymsg exit'
-bindsym $mod+Shift+r exec swaynag -t warning -m 'Are you sure you want to reboot?' -B 'Yes, reboot' 'sudo reboot'
-bindsym $mod+Shift+o exec swaynag -t warning -m 'Are you sure you want to shutdown?' -B 'Yes, shutdown' 'sudo poweroff'
+# bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'pkill pipewire && swaymsg exit'
+# bindsym $mod+Shift+r exec swaynag -t warning -m 'Are you sure you want to reboot?' -B 'Yes, reboot' 'sudo reboot'
+# bindsym $mod+Shift+o exec swaynag -t warning -m 'Are you sure you want to shutdown?' -B 'Yes, shutdown' 'sudo poweroff'
 bindsym $mod+Shift+y exec $swaylock
 bindsym $mod+Shift+z exec $swaylock && sudo zzz
 bindsym button2 kill
@@ -165,7 +166,7 @@ bindsym $mod+b splith
 bindsym $mod+v splitv
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+# bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
 
@@ -187,27 +188,45 @@ bindsym $mod+minus scratchpad show
 #
 # Resizing containers:
 #
-mode "resize" {
+mode $resize {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 100px
-    bindsym $down resize grow height 100px
-    bindsym $up resize shrink height 100px
-    bindsym $right resize grow width 100px
+    bindsym --to-code {
+	$left resize shrink width 100px
+	$down resize grow height 100px
+	$up resize shrink height 100px
+	$right resize grow width 100px
 
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 100px
-    bindsym Down resize grow height 100px
-    bindsym Up resize shrink height 100px
-    bindsym Right resize grow width 100px
+	# Ditto, with arrow keys
+	Left resize shrink width 100px
+	Down resize grow height 100px
+	Up resize shrink height 100px
+	Right resize grow width 100px
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+	# Return to default mode
+	Return mode "default"
+	Escape mode "default"
+    }
 }
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode $resize
+
+mode $exit {
+    bindsym --to-code {
+	s exec swaylock && sudo zzz, mode "default"
+	p exec sudo poweroff
+	r exec sudo reboot
+	l exec "pkill pipewire && swaymsg exit"
+    
+	Return mode "default"
+	Escape mode "default"
+	$mod+e mode "default"
+    }
+}
+
+bindsym --to-code $mod+e mode $exit
+
 
 ### Machine controls
 bindsym XF86MonBrightnessDown exec light -U 2%

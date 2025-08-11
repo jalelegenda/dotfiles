@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "wlr/taskbar", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "backlight", "pulseaudio", "battery", "cpu", "custom/audio_idle_inhibitor", "sway/language", "tray", "clock"],
+    "modules-right": ["network", "backlight", "pulseaudio", "battery", "cpu", "custom/audio_idle_inhibitor", "sway/language", "idle_inhibitor", "tray", "clock"],
         "bat": "BAT0",
     "battery": {
         "format": "<span color='#d08770'>{icon}</span> {capacity}%",
@@ -45,6 +45,13 @@
 	    "on-scroll-down": "shift_down"
 	}
     },
+    "idle_inhibitor": {
+	"format": "{icon}",
+	"format-icons": {
+	    "activated": "",
+	    "deactivated": ""
+	}
+    },
     "network": {
         "format-wifi": "<span color='#bf616a'>\uf1eb </span> <span>{essid} ({signalStrength}%)</span>",
         "format-linked": "<span color='#bf616a'> </span> <span>Connected</span>",
@@ -85,6 +92,7 @@
     },
     "sway/language": {
 	"format": "<span color='#a3be8c'>\uf0ac</span> {short}",
+	"on-click": "swaymsg input type:keyboard xkb_switch_layout next"
     },
     "wlr/taskbar": {
 	"format": "{icon}",
